@@ -3,7 +3,7 @@
 $host = "localhost";
 $user = "root";       // sesuaikan dengan user phpmyadmin
 $pass = "";           // kosongkan jika pakai XAMPP default
-$db   = "db_streetfood_saparua";
+$db   = "db_streetfood_saparua2";
 
 // Membuat koneksi
 $koneksi = mysqli_connect($host, $user, $pass, $db);
