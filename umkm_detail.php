@@ -13,10 +13,10 @@ if ($id == 0) {
 }
 
 $sql_umkm = "SELECT u.*, k.jenis_kategori, l.deskripsi AS alamat, l.koordinat
-             FROM UMKM u
-             LEFT JOIN KATEGORI k ON u.id_kategori = k.id_kategori
-             LEFT JOIN LOKASI l ON u.id_lokasi = l.id_lokasi
-             WHERE u.id_umkm = $id";
+            FROM UMKM u
+            LEFT JOIN KATEGORI k ON u.id_kategori = k.id_kategori
+            LEFT JOIN LOKASI l ON u.id_lokasi = l.id_lokasi
+            WHERE u.id_umkm = $id";
 $result = mysqli_query($koneksi, $sql_umkm);
 $umkm = mysqli_fetch_assoc($result);
 if (!$umkm) {
