@@ -117,7 +117,7 @@ function halalBadge($status) {
       <a href="index.php">Beranda</a>
       <span>></span>
       <a href="umkm_detail.php?id=<?= $menu['id_umkm'] ?>"><?= htmlspecialchars($menu['nama_stand']) ?></a>
-      <span><</span>
+      <span>></span>
       <span><?= htmlspecialchars($menu['nama_menu']) ?></span>
     </div>
   </div>
@@ -175,17 +175,15 @@ function halalBadge($status) {
     </div>
   </div>
 
+  <?php $ada_ekstra = !empty($ekstra_menu) || !empty($ekstra_umkm); ?>
+
+  <?php if ($ada_ekstra): ?>
   <div class="ekstra-section-wrap">
     <div class="ekstra-section-inner">
-
-      <?php $ada_ekstra = !empty($ekstra_menu) || !empty($ekstra_umkm); ?>
-
-      <?php if ($ada_ekstra): ?>
       <h2 class="ekstra-section-title">
         <span>✚</span> Tambahan & Ekstra
       </h2>
       <p class="ekstra-section-sub">Pilih ekstra yang tersedia untuk menu ini</p>
-      <?php endif; ?>
 
       <div class="ekstra-cols">
 
@@ -257,16 +255,10 @@ function halalBadge($status) {
         </div>
         <?php endif; ?>
 
-        <?php if (!$ada_ekstra): ?>
-        <div class="ekstra-empty">
-          <span>—</span>
-          <p>Tidak ada pilihan ekstra untuk menu ini.</p>
-        </div>
-        <?php endif; ?>
-
       </div>
     </div>
   </div>
+  <?php endif; ?>
 
   <?php if (!empty($other_menus)): ?>
   <div class="other-menu-section">

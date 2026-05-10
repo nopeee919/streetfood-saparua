@@ -1,5 +1,5 @@
 /* ─────────────────────────────────────────────────────────────────
-   StreetFood Saparua — style.css (v2)
+   StreetFood Saparua — style.css v3
    ───────────────────────────────────────────────────────────────── */
 
 /* ── TOKENS ─────────────────────────────────────────────────────── */
@@ -8,7 +8,6 @@
   --c-surface: #ffffff;
   --c-surface2: #f5f0e8;
   --c-border: #e8dfd0;
-  --c-border2: #d4c9b5;
 
   --c-text: #1a1208;
   --c-text-2: #5c4f38;
@@ -16,7 +15,6 @@
 
   --c-accent: #e8602c;
   --c-accent-2: #f5a623;
-  --c-accent-3: #2e7d32;
 
   --c-green: #2e7d32;
   --c-yellow: #f9a825;
@@ -112,7 +110,7 @@ button {
   font-style: normal;
 }
 
-/* ── SEARCH WRAPPER + DROPDOWN ──────────────────────────────────── */
+/* ── SEARCH WRAPPER ──────────────────────────────────────────────── */
 .search-wrapper {
   flex: 1;
   max-width: 560px;
@@ -121,6 +119,7 @@ button {
 .search-bar {
   display: flex;
   align-items: center;
+  width: 100%;
   background: rgba(255, 255, 255, 0.1);
   border: 1.5px solid rgba(255, 255, 255, 0.2);
   border-radius: 100px;
@@ -128,13 +127,10 @@ button {
   transition:
     border-color 0.2s,
     background 0.2s;
-  width: 100%;
 }
 .search-bar:focus-within {
   border-color: var(--c-accent-2);
   background: rgba(255, 255, 255, 0.18);
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
 }
 .search-bar input {
   flex: 1;
@@ -253,7 +249,6 @@ button {
   padding: 0 24px;
   display: flex;
   align-items: center;
-  gap: 0;
   height: var(--filter-h);
   flex-wrap: wrap;
 }
@@ -301,7 +296,7 @@ button {
   border-color: var(--c-accent);
 }
 .filter-group input[type="number"] {
-  width: 90px;
+  width: 88px;
 }
 .range-inputs {
   display: flex;
@@ -540,8 +535,8 @@ button {
   box-shadow: var(--shadow-card);
   cursor: pointer;
   transition:
-    transform 0.22s ease,
-    box-shadow 0.22s ease;
+    transform 0.22s,
+    box-shadow 0.22s;
   display: flex;
   flex-direction: column;
 }
@@ -559,7 +554,7 @@ button {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.35s ease;
+  transition: transform 0.35s;
 }
 .umkm-card:hover .card-img-wrap img {
   transform: scale(1.06);
@@ -586,6 +581,24 @@ button {
   border-radius: 100px;
   text-transform: uppercase;
   backdrop-filter: blur(4px);
+}
+.card-status-dot {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 3px 9px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 600;
+  backdrop-filter: blur(4px);
+}
+.card-status-dot.open {
+  background: rgba(46, 125, 50, 0.85);
+  color: #fff;
+}
+.card-status-dot.closed {
+  background: rgba(198, 40, 40, 0.75);
+  color: #fff;
 }
 .card-body {
   padding: 14px;
@@ -932,7 +945,7 @@ button {
   margin: 0 auto;
   padding: 36px 24px;
   display: grid;
-  grid-template-columns: 300px 1fr;
+  grid-template-columns: 280px 1fr;
   gap: 36px;
   align-items: start;
 }
@@ -940,7 +953,7 @@ button {
   position: relative;
   border-radius: var(--r-card);
   overflow: hidden;
-  aspect-ratio: 4/3;
+  aspect-ratio: 1;
   background: var(--c-surface2);
   box-shadow: var(--shadow-card);
 }
@@ -957,7 +970,7 @@ button {
   justify-content: center;
   font-size: 72px;
   opacity: 0.2;
-  aspect-ratio: 4/3;
+  aspect-ratio: 1;
 }
 .detail-status-dot {
   position: absolute;
@@ -1047,17 +1060,17 @@ button {
   gap: 6px;
   font-size: 13px;
   color: var(--c-text-2);
-  margin-bottom: 10px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
 }
 .maps-link {
-  margin-left: 4px;
   color: var(--c-blue);
   font-size: 13px;
+  margin-left: 4px;
 }
 .maps-link:hover {
   text-decoration: underline;
 }
-.detail-jadwal,
 .detail-bayar,
 .detail-mitra {
   display: flex;
@@ -1067,14 +1080,6 @@ button {
   font-size: 13px;
   color: var(--c-text-2);
   margin-bottom: 10px;
-}
-.jadwal-pill {
-  padding: 3px 10px;
-  border-radius: 100px;
-  font-size: 12px;
-  font-weight: 500;
-  background: #e3f2fd;
-  color: var(--c-blue);
 }
 .bayar-pill {
   padding: 3px 10px;
@@ -1107,6 +1112,173 @@ button {
   background: #ffe0b2;
 }
 
+/* ═══════════════════════════════════════════════════════════════════
+   JADWAL MINGGUAN — GRID 7 HARI
+   ═══════════════════════════════════════════════════════════════════ */
+.jadwal-section {
+  margin-bottom: 16px;
+}
+.jadwal-section-label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  color: var(--c-text-2);
+  margin-bottom: 10px;
+}
+.jadwal-section-label strong {
+  color: var(--c-text);
+}
+
+.jadwal-week-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+.jadwal-day-card {
+  background: var(--c-surface2);
+  border: 1.5px solid var(--c-border);
+  border-radius: 10px;
+  padding: 8px 5px 7px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  position: relative;
+  transition: border-color 0.15s;
+}
+.jadwal-day-card.day-tutup {
+  background: #f9f4f0;
+  border-color: transparent;
+  opacity: 0.55;
+}
+.jadwal-day-card.day-today {
+  border-color: var(--c-accent);
+  background: #fff5f0;
+  box-shadow: 0 0 0 2px rgba(232, 96, 44, 0.12);
+}
+.day-name {
+  font-family: var(--font-head);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--c-text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+.jadwal-day-card.day-today .day-name {
+  color: var(--c-accent);
+}
+.day-jam {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--c-text);
+  background: var(--c-surface);
+  border-radius: 5px;
+  padding: 1px 4px;
+  white-space: nowrap;
+}
+.day-sep {
+  font-size: 9px;
+  color: var(--c-text-3);
+  margin: -2px 0;
+}
+.day-tutup-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--c-red);
+}
+.day-today-badge {
+  position: absolute;
+  bottom: -7px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--c-accent);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 100px;
+  white-space: nowrap;
+  letter-spacing: 0.3px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   JADWAL MINI (menu_detail) — pill row
+   ═══════════════════════════════════════════════════════════════════ */
+.menu-jadwal-mini {
+  background: var(--c-surface2);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-sm);
+  padding: 12px 14px;
+  margin-bottom: 18px;
+}
+.menu-jadwal-mini-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--c-text-2);
+  margin-bottom: 10px;
+}
+.menu-jadwal-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.mj-pill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--c-surface);
+  border: 1.5px solid var(--c-border);
+  border-radius: 8px;
+  padding: 5px 8px;
+  min-width: 48px;
+}
+.mj-pill.mj-tutup {
+  background: #f8f4f0;
+  opacity: 0.5;
+}
+.mj-pill.mj-today {
+  border-color: var(--c-accent);
+  background: #fff5f0;
+}
+.mj-day {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--c-text-3);
+  text-transform: uppercase;
+}
+.mj-pill.mj-today .mj-day {
+  color: var(--c-accent);
+}
+.mj-time {
+  font-size: 9px;
+  font-weight: 600;
+  color: var(--c-text);
+  text-align: center;
+}
+.mj-time-off {
+  color: var(--c-red);
+}
+.detail-status-dot-inline {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.detail-status-dot-inline.open {
+  background: #e8f5e9;
+  color: var(--c-green);
+}
+.detail-status-dot-inline.closed {
+  background: #ffebee;
+  color: var(--c-red);
+}
+
 /* ── BOOTH GALLERY ───────────────────────────────────────────────── */
 .booth-gallery-section {
   border-bottom: 1px solid var(--c-border);
@@ -1126,23 +1298,27 @@ button {
   align-items: center;
   gap: 8px;
 }
-
-/* Grid dinamis berdasarkan jumlah foto */
 .booth-gallery-grid {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
-  grid-template-rows: repeat(2, 160px);
   gap: 8px;
   border-radius: var(--r-card);
   overflow: hidden;
 }
-
-/* Foto pertama besar */
-.booth-thumb-main {
-  grid-column: 1 / 2;
-  grid-row: 1 / 3;
+.booth-count-1 {
+  grid-template-columns: 1fr;
 }
-
+.booth-count-2 {
+  grid-template-columns: 2fr 1fr;
+}
+.booth-count-3 {
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: repeat(2, 160px);
+}
+.booth-count-4,
+.booth-count-5 {
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-rows: repeat(2, 160px);
+}
 .booth-thumb {
   position: relative;
   overflow: hidden;
@@ -1150,18 +1326,21 @@ button {
   cursor: pointer;
   border-radius: var(--r-sm);
 }
-
 .booth-thumb img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.35s ease;
+  transition: transform 0.35s;
 }
-
 .booth-thumb:hover img {
   transform: scale(1.05);
 }
-
+.booth-thumb-main {
+  grid-row: span 2;
+}
+.booth-count-1 .booth-thumb {
+  height: 380px;
+}
 .booth-thumb-caption {
   position: absolute;
   bottom: 0;
@@ -1174,16 +1353,13 @@ button {
   opacity: 0;
   transition: opacity 0.2s;
 }
-
 .booth-thumb:hover .booth-thumb-caption {
   opacity: 1;
 }
-
 .booth-more-overlay {
   position: absolute;
   inset: 0;
   background: rgba(26, 18, 8, 0.6);
-  backdrop-filter: blur(3px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1265,7 +1441,6 @@ button {
   justify-content: center;
   flex-shrink: 0;
   transition: background 0.15s;
-  z-index: 10;
 }
 .lb-prev:hover,
 .lb-next:hover {
@@ -1280,7 +1455,7 @@ button {
   font-size: 13px;
 }
 
-/* ── MENU SECTION (detail UMKM) ──────────────────────────────────── */
+/* ── MENU SECTION ────────────────────────────────────────────────── */
 .detail-menu-section {
   max-width: 1100px;
   margin: 36px auto;
@@ -1297,11 +1472,9 @@ button {
 }
 .menu-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(195px, 1fr));
   gap: 16px;
 }
-
-/* Menu card — bisa jadi <article> atau <a> */
 .menu-card {
   background: var(--c-surface);
   border: 1px solid var(--c-border);
@@ -1418,10 +1591,6 @@ button {
   align-items: center;
   gap: 10px;
   margin-bottom: 6px;
-  color: var(--c-text);
-}
-.ekstra-section-title span {
-  font-size: 20px;
 }
 .ekstra-section-sub {
   font-size: 14px;
@@ -1430,11 +1599,11 @@ button {
 }
 .ekstra-cols {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
   gap: 20px;
 }
 .ekstra-col-full {
-  grid-column: 1 / -1;
+  grid-column: 1/-1;
   max-width: 600px;
 }
 .ekstra-card {
@@ -1471,7 +1640,7 @@ button {
   color: var(--c-text-3);
 }
 .ekstra-list {
-  padding: 8px 0;
+  padding: 4px 0;
 }
 .ekstra-row {
   display: flex;
@@ -1514,17 +1683,6 @@ button {
   padding: 2px 8px;
   border-radius: 100px;
 }
-.ekstra-empty {
-  grid-column: 1/-1;
-  text-align: center;
-  padding: 40px;
-  color: var(--c-text-3);
-}
-.ekstra-empty span {
-  font-size: 36px;
-  display: block;
-  margin-bottom: 10px;
-}
 
 /* ── MENU DETAIL PAGE ────────────────────────────────────────────── */
 .menu-detail-hero {
@@ -1536,7 +1694,7 @@ button {
   margin: 0 auto;
   padding: 36px 24px;
   display: grid;
-  grid-template-columns: 340px 1fr;
+  grid-template-columns: 320px 1fr;
   gap: 36px;
   align-items: start;
 }
@@ -1560,6 +1718,7 @@ button {
   justify-content: center;
   font-size: 80px;
   opacity: 0.2;
+  aspect-ratio: 4/3;
 }
 .menu-from-umkm {
   display: inline-flex;
@@ -1574,7 +1733,6 @@ button {
   color: var(--c-text-2);
   margin-bottom: 14px;
   transition: border-color 0.15s;
-  text-decoration: none;
 }
 .menu-from-umkm:hover {
   border-color: var(--c-accent);
@@ -1624,7 +1782,7 @@ button {
   align-items: center;
   flex-wrap: wrap;
   gap: 8px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 .detail-sub-label {
   font-size: 13px;
@@ -1650,7 +1808,6 @@ button {
   margin: 36px auto;
   padding: 0 24px;
 }
-/* .other-menu-inner {} */
 
 /* ── BACK BAR ────────────────────────────────────────────────────── */
 .back-bar-umkm,
@@ -1726,9 +1883,11 @@ button {
   .menu-detail-inner {
     grid-template-columns: 1fr;
   }
-  .detail-hero-img,
-  .menu-detail-img {
-    max-width: 400px;
+  .detail-hero-img {
+    max-width: 360px;
+  }
+  .jadwal-week-grid {
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 @media (max-width: 660px) {
@@ -1777,7 +1936,10 @@ button {
   .ekstra-cols {
     grid-template-columns: 1fr;
   }
-  .lightbox-content {
-    flex-direction: column;
+  .jadwal-week-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .menu-jadwal-pills {
+    gap: 4px;
   }
 }

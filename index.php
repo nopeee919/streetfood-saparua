@@ -6,6 +6,11 @@ if (isset($_GET['filter'])) {
 } else {
   $filter_type = '';
 }
+if (isset($_GET['jam_hari'])) {
+  $jam_hari = $_GET['jam_hari'];
+} else {
+  $jam_hari = '';
+}
 if (isset($_GET['jam'])) {
   $jam_input = $_GET['jam'];
 } else {
@@ -26,6 +31,9 @@ if (isset($_GET['rasa'])) {
 } else {
   $rasa_id = '';
 }
+
+$hari_ini   = hariIniID();
+$semua_hari = ['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu','Minggu'];
 
 $halal_data = [];
 $sql_halal = "SELECT status_halal, COUNT(*) as jumlah
@@ -60,7 +68,6 @@ while ($row = mysqli_fetch_assoc($bayar_result)) {
 
 $rasa_all = [];
 $sql_rasa = "SELECT kr.id_rasa, kr.nama_rasa,
-              COUNT(DISTINCT mr.id_menu) as jumlah_menu,
               COUNT(DISTINCT m.id_umkm) as jumlah_umkm
             FROM KATEGORI_RASA kr
             LEFT JOIN MENU_RASA mr ON kr.id_rasa = mr.id_rasa
@@ -73,24 +80,35 @@ while ($row = mysqli_fetch_assoc($rasa_result)) {
 }
 
 $umkm_list    = [];
-$filter_count = 0;
 $filter_label = '';
 $active_filter = false;
 
 if ($filter_type === 'jam' && $jam_input) {
   $active_filter = true;
-  $filter_label = "Buka pukul " . htmlspecialchars($jam_input);
-  $sql = "SELECT u.id_umkm, u.nama_stand, u.nama_pemilik, u.foto, u.status_halal, k.jenis_kategori, l.deskripsi as alamat, j.jam_buka, j.jam_tutup
+  if ($jam_hari) {
+    $hari_filter = $jam_hari;
+  } else {
+    $hari_filter = $hari_ini;
+  }
+  $jam = $jam_input . ':00';
+  $filter_label  = "Buka hari $hari_filter pukul $jam_input";
+
+  $sql = "SELECT DISTINCT u.id_umkm, u.nama_stand, u.nama_pemilik, u.foto, u.status_halal,
+                k.jenis_kategori, l.deskripsi as alamat,
+                j.hari, j.jam_buka, j.jam_tutup
           FROM UMKM u
           LEFT JOIN KATEGORI k ON u.id_kategori = k.id_kategori
           LEFT JOIN LOKASI l ON u.id_lokasi = l.id_lokasi
-          LEFT JOIN JADWAL j ON u.id_umkm = j.id_umkm
-          WHERE j.jam_buka <= '$jam_input'
-          AND j.jam_tutup >= '$jam_input'";
+          INNER JOIN JADWAL j ON u.id_umkm = j.id_umkm
+          WHERE j.hari = '$hari_filter'
+          AND j.jam_buka <= '$jam'
+          AND j.jam_tutup >= '$jam'
+          ORDER BY u.nama_stand";
   $result = mysqli_query($koneksi, $sql);
   while ($row = mysqli_fetch_assoc($result)) {
     $umkm_list[] = $row;
   }
+
 } elseif ($filter_type === 'harga' && ($harga_min !== '' || $harga_max !== '')) {
   $active_filter = true;
   if ($harga_min != '') {
@@ -109,40 +127,49 @@ if ($filter_type === 'jam' && $jam_input) {
   } else {
     $filter_label .= '∞';
   }
-  $sql = "SELECT DISTINCT u.id_umkm, u.nama_stand, u.nama_pemilik, u.foto, u.status_halal, k.jenis_kategori, l.deskripsi as alamat
+
+  $sql = "SELECT DISTINCT u.id_umkm, u.nama_stand, u.nama_pemilik, u.foto, u.status_halal,
+                k.jenis_kategori, l.deskripsi as alamat
           FROM UMKM u
           LEFT JOIN KATEGORI k ON u.id_kategori=k.id_kategori
           LEFT JOIN LOKASI l ON u.id_lokasi=l.id_lokasi
           INNER JOIN MENU m ON u.id_umkm=m.id_umkm
-          WHERE m.harga_menu BETWEEN $min AND $max";
+          WHERE m.harga_menu BETWEEN $min AND $max
+          ORDER BY u.nama_stand";
   $result = mysqli_query($koneksi, $sql);
   while ($row = mysqli_fetch_assoc($result)) {
     $umkm_list[] = $row;
   }
+
 } elseif ($filter_type === 'rasa' && $rasa_id) {
   $active_filter = true;
-  $sql_rasa = "SELECT nama_rasa FROM KATEGORI_RASA WHERE id_rasa = $rasa_id";
-  $rasa_result = mysqli_query($koneksi, $sql_rasa);
-  $rasa_row = mysqli_fetch_assoc($rasa_result);
+  $sql_rasa_name = "SELECT nama_rasa FROM KATEGORI_RASA WHERE id_rasa = $rasa_id";
+  $rasa_name_result = mysqli_query($koneksi, $sql_rasa_name);
+  $rasa_row = mysqli_fetch_assoc($rasa_name_result);
   if (isset($rasa_row['nama_rasa'])) {
     $rasa_name = $rasa_row['nama_rasa'];
-  } else {  
+  } else {
     $rasa_name = 'Rasa';
   }
-  $filter_label = "Rasa: " . htmlspecialchars($rasa_name);
-  $sql = "SELECT DISTINCT u.id_umkm, u.nama_stand, u.nama_pemilik, u.foto, u.status_halal, k.jenis_kategori, l.deskripsi as alamat
+  $filter_label = "Rasa: $rasa_name";
+
+  $sql = "SELECT DISTINCT u.id_umkm, u.nama_stand, u.nama_pemilik, u.foto, u.status_halal,
+                k.jenis_kategori, l.deskripsi as alamat
           FROM UMKM u
           LEFT JOIN KATEGORI k ON u.id_kategori=k.id_kategori
           LEFT JOIN LOKASI l ON u.id_lokasi=l.id_lokasi
           INNER JOIN MENU m ON u.id_umkm=m.id_umkm
           INNER JOIN MENU_RASA mr ON m.id_menu=mr.id_menu
-          WHERE mr.id_rasa = $rasa_id";
+          WHERE mr.id_rasa = $rasa_id
+          ORDER BY u.nama_stand";
   $result = mysqli_query($koneksi, $sql);
   while ($row = mysqli_fetch_assoc($result)) {
     $umkm_list[] = $row;
   }
+
 } else {
-  $sql = "SELECT u.id_umkm, u.nama_stand, u.nama_pemilik, u.foto, u.status_halal, k.jenis_kategori, l.deskripsi as alamat
+  $sql = "SELECT u.id_umkm, u.nama_stand, u.nama_pemilik, u.foto, u.status_halal,
+                k.jenis_kategori, l.deskripsi as alamat
           FROM UMKM u
           LEFT JOIN KATEGORI k ON u.id_kategori=k.id_kategori
           LEFT JOIN LOKASI l ON u.id_lokasi=l.id_lokasi
@@ -155,9 +182,9 @@ if ($filter_type === 'jam' && $jam_input) {
 
 $filter_count = count($umkm_list);
 
-function getFilteredMenu($koneksi, $umkm_id, $filter_type, $harga_min, $harga_max, $rasa_id){
+function getFilteredMenu($koneksi, $umkm_id, $filter_type, $harga_min, $harga_max, $rasa_id) {
   $menu = [];
-  if ($filter_type === 'harga'){
+  if ($filter_type === 'harga') {
     if ($harga_min != '') {
       $min = (float)$harga_min;
     } else {
@@ -172,20 +199,18 @@ function getFilteredMenu($koneksi, $umkm_id, $filter_type, $harga_min, $harga_ma
             FROM MENU
             WHERE id_umkm = $umkm_id
             AND harga_menu BETWEEN $min AND $max";
-    $result = mysqli_query($koneksi, $sql);
-    while ($row = mysqli_fetch_assoc($result)) {
-      $menu[] = $row;
-    }
   } elseif ($filter_type === 'rasa') {
     $sql = "SELECT m.id_menu, m.nama_menu, m.harga_menu, m.satuan
             FROM MENU m
             INNER JOIN MENU_RASA mr ON m.id_menu = mr.id_menu
             WHERE m.id_umkm = $umkm_id
             AND mr.id_rasa = $rasa_id";
-    $result = mysqli_query($koneksi, $sql);
-    while ($row = mysqli_fetch_assoc($result)) {
-      $menu[] = $row;
-    }
+  } else {
+    return [];
+  }
+  $result = mysqli_query($koneksi, $sql);
+  while ($row = mysqli_fetch_assoc($result)) {
+    $menu[] = $row;
   }
   return $menu;
 }
@@ -201,6 +226,18 @@ function getMitraUmkm($koneksi, $umkm_id) {
     $mitra[] = $row;
   }
   return $mitra;
+}
+
+$buka_ids = [];
+$now_time = date('H:i:s');
+$sql_buka = "SELECT id_umkm
+              FROM JADWAL
+              WHERE hari = '$hari_ini'
+              AND jam_buka <= '$now_time'
+              AND jam_tutup >= '$now_time'";
+$result_buka = mysqli_query($koneksi, $sql_buka);
+while ($row = mysqli_fetch_assoc($result_buka)) {
+  $buka_ids[] = $row['id_umkm'];
 }
 ?>
 
@@ -233,6 +270,7 @@ function getMitraUmkm($koneksi, $umkm_id) {
         </div>
       </div>
     </header>
+
     <div class="filter-bar">
       <div class="filter-bar-inner">
         <span class="filter-label-title">Filter:</span>
@@ -240,6 +278,30 @@ function getMitraUmkm($koneksi, $umkm_id) {
           <input type="hidden" name="filter" value="jam" />
           <div class="filter-group">
             <label>⏰ Jam Buka</label>
+            <select name="jam_hari">
+              <?php foreach ($semua_hari as $h): ?>
+                <?php
+                if ($jam_hari != '') {
+                  $selected_hari = $jam_hari;
+                } else {
+                  $selected_hari = $hari_ini;
+                }
+                if ($selected_hari == $h) {
+                  $selected = 'selected';
+                } else {
+                  $selected = '';
+                }
+                if ($h == $hari_ini) {
+                  $label_hari = $h . ' (hari ini)';
+                } else {
+                  $label_hari = $h;
+                }
+                ?>
+                <option value="<?= $h ?>" <?= $selected ?>>
+                  <?= $label_hari ?>
+                </option>
+              <?php endforeach; ?>
+            </select>
             <input type="time" name="jam" value="<?= htmlspecialchars($jam_input) ?>" required />
             <?php
             $class = '';
@@ -258,7 +320,7 @@ function getMitraUmkm($koneksi, $umkm_id) {
             <div class="range-inputs">
               <input type="number" name="harga_min" placeholder="Min" value="<?= htmlspecialchars($harga_min) ?>" min="0" />
               <span>-</span>
-              <input type="number" name="harga_max" placeholder="Max"value="<?= htmlspecialchars($harga_max) ?>" min="0" />
+              <input type="number" name="harga_max" placeholder="Max" value="<?= htmlspecialchars($harga_max) ?>" min="0" />
             </div>
             <?php
             $class = '';
@@ -296,7 +358,9 @@ function getMitraUmkm($koneksi, $umkm_id) {
         <?php endif; ?>
       </div>
     </div>
+
     <div class="page-layout">
+
       <aside class="sidebar sidebar-left">
         <div class="sidebar-card">
           <h3 class="sidebar-title">
@@ -305,18 +369,16 @@ function getMitraUmkm($koneksi, $umkm_id) {
           <?php foreach ($halal_data as $h): ?>
             <?php
               $badge_color = 'yellow';
-              if ($h['status_halal'] == 'Sertifikasi Halal'){
+              if ($h['status_halal'] == 'Sertifikasi Halal') {
                 $badge_color = 'green';
               } elseif ($h['status_halal'] == 'Non-Halal') {
                 $badge_color = 'red';
               }
             ?>
-          <div class="sidebar-row">
-            <span class="sidebar-row-label"><?= htmlspecialchars($h['status_halal']) ?></span>
-            <span class="badge badge-<?= $badge_color ?>">
-              <?= $h['jumlah'] ?>
-            </span>
-          </div>
+            <div class="sidebar-row">
+              <span class="sidebar-row-label"><?= htmlspecialchars($h['status_halal']) ?></span>
+              <span class="badge badge-<?= $badge_color ?>"><?= $h['jumlah'] ?></span>
+            </div>
           <?php endforeach; ?>
         </div>
         <div class="sidebar-card">
@@ -325,29 +387,30 @@ function getMitraUmkm($koneksi, $umkm_id) {
           </h3>
           <?php foreach ($bayar_data as $b): ?>
             <div class="sidebar-row">
-            <span class="sidebar-row-label"><?= htmlspecialchars($b['metode_pembayaran']) ?></span>
-            <span class="badge badge-blue"><?= $b['jumlah'] ?></span>
-          </div>
+              <span class="sidebar-row-label"><?= htmlspecialchars($b['metode_pembayaran']) ?></span>
+              <span class="badge badge-blue"><?= $b['jumlah'] ?></span>
+            </div>
           <?php endforeach; ?>
           <p class="sidebar-note">
             Selain cash:
             <?php
               $non_cash = [];
               foreach ($bayar_data as $b) {
-                if ($b['metode_pembayaran'] != 'Cash') {
+                if (strtolower($b['metode_pembayaran']) != 'cash') {
                   $non_cash[] = $b['metode_pembayaran'];
                 }
               }
-              echo implode(', ', $non_cash);
+              echo implode(', ', $non_cash) ?: '–';
             ?>
           </p>
         </div>
       </aside>
+
       <main class="main-content">
         <?php if ($active_filter): ?>
         <div class="filter-result-header">
           <div class="filter-result-info">
-            <span class="filter-result-tag"><?= $filter_label ?></span>
+            <span class="filter-result-tag"><?= htmlspecialchars($filter_label) ?></span>
             <strong><?= $filter_count ?> UMKM</strong> ditemukan
           </div>
           <a href="index.php" class="link-reset">Lihat semua UMKM →</a>
@@ -358,8 +421,10 @@ function getMitraUmkm($koneksi, $umkm_id) {
           <p>Klik kartu UMKM untuk lihat detail & menu lengkap</p>
         </div>
         <?php endif; ?>
+
         <div class="umkm-grid">
           <?php foreach ($umkm_list as $u):
+            $is_buka = in_array($u['id_umkm'], $buka_ids);
             if ($filter_type === 'jam') {
               $mitra_links = getMitraUmkm($koneksi, $u['id_umkm']);
             } else {
@@ -378,18 +443,35 @@ function getMitraUmkm($koneksi, $umkm_id) {
               <?php else: ?>
                 <div class="card-img-placeholder">🍽️</div>
               <?php endif; ?>
-              <span class="card-kategori"><?= htmlspecialchars($u['jenis_kategori']??'Umum') ?></span>
+              <span class="card-kategori"><?= htmlspecialchars($u['jenis_kategori'] ?? 'Umum') ?></span>
+              <?php if (!$active_filter): ?>
+                <?php
+                if ($is_buka) {
+                  $status_class = 'open';
+                  $status_text  = '● Buka';
+                } else {
+                  $status_class = 'closed';
+                  $status_text  = '● Tutup';
+                }
+                ?>
+                <span class="card-status-dot <?= $status_class ?>">
+                  <?= $status_text ?>
+                </span>
+              <?php endif; ?>
             </div>
+
             <div class="card-body">
               <h3 class="card-title"><?= htmlspecialchars($u['nama_stand']) ?></h3>
               <p class="card-owner">
                 <span>👤</span>
                 <?= htmlspecialchars($u['nama_pemilik']) ?>
               </p>
+
               <?php if ($filter_type === 'jam' && !empty($u['jam_buka'])): ?>
                 <p class="card-jadwal">
                   <span>🕗</span>
-                  <?= substr($u['jam_buka'],0,5) ?> - <?= substr($u['jam_tutup'],0,5) ?>
+                  <?= htmlspecialchars($u['hari']) ?>
+                  <?= substr($u['jam_buka'], 0, 5) ?> - <?= substr($u['jam_tutup'], 0, 5) ?>
                 </p>
                 <?php if (!empty($mitra_links)): ?>
                   <div class="card-mitra">
@@ -405,18 +487,20 @@ function getMitraUmkm($koneksi, $umkm_id) {
                   </div>
                 <?php endif; ?>
               <?php endif; ?>
+
               <?php if (($filter_type === 'harga' || $filter_type === 'rasa') && !empty($filtered_menu)): ?>
                 <div class="card-menu-list">
                   <p class="menu-list-label">Menu yang sesuai:</p>
                   <?php foreach ($filtered_menu as $mn): ?>
                   <div class="menu-row">
                     <span class="menu-name"><?= htmlspecialchars($mn['nama_menu']) ?></span>
-                    <span class="menu-price">Rp<?= number_format($mn['harga_menu'],0,',','.') ?><?= $mn['satuan']?'/'.$mn['satuan']:'' ?></span>
+                    <span class="menu-price">Rp<?= number_format($mn['harga_menu'], 0, ',', '.') ?><?= $mn['satuan'] ? '/' . $mn['satuan'] : '' ?></span>
                   </div>
                   <?php endforeach; ?>
                 </div>
               <?php endif; ?>
             </div>
+
             <div class="card-footer">
               <span class="card-detail-link">Lihat Detail →</span>
             </div>
@@ -430,10 +514,11 @@ function getMitraUmkm($koneksi, $umkm_id) {
           <?php endif; ?>
         </div>
       </main>
+
       <aside class="sidebar sidebar-right">
         <div class="sidebar-card">
           <h3 class="sidebar-title"><span class="sidebar-icon">🛵</span> Mitra Online</h3>
-          <?php foreach ($mitra_data as $i=>$m): ?>
+          <?php foreach ($mitra_data as $i => $m): ?>
             <?php
               $class = '';
               $icon = '';
@@ -442,7 +527,7 @@ function getMitraUmkm($koneksi, $umkm_id) {
                 $icon = '🏆 ';
               }
             ?>
-            <div class="sidebar-row <?= $i===0?'top-mitra':'' ?>">
+            <div class="sidebar-row <?= $class ?>">
               <span class="sidebar-row-label"><?= $icon ?><?= htmlspecialchars($m['nama_mitra']) ?></span>
               <span class="badge badge-orange"><?= $m['jumlah'] ?></span>
             </div>
@@ -456,7 +541,6 @@ function getMitraUmkm($koneksi, $umkm_id) {
           <?php foreach ($rasa_all as $r): ?>
             <?php
               $active_class = '';
-
               if ($rasa_id == $r['id_rasa']) {
                 $active_class = 'active-rasa';
               }
@@ -471,6 +555,7 @@ function getMitraUmkm($koneksi, $umkm_id) {
         </div>
       </aside>
     </div>
+
     <footer class="site-footer">
       <p>© 2026 StreetFood Saparua — Sistem Manajemen Basis Data</p>
     </footer>
