@@ -162,7 +162,7 @@ function halalBadge($status) {
     <div class="breadcrumb-bar">
       <div class="breadcrumb-inner">
         <a href="index.php">Beranda</a>
-        <span>›</span>
+        <span>></span>
         <span><?= htmlspecialchars($umkm['nama_stand']) ?></span>
       </div>
     </div>
@@ -304,7 +304,7 @@ function halalBadge($status) {
           <img id="lbImg" src="" alt="">
           <p id="lbCaption" class="lb-caption"></p>
         </div>
-        <button class="lb-next" id="lbNext">›</button>
+        <button class="lb-next" id="lbNext">></button>
         <p class="lb-counter"><span id="lbCurrent">1</span> / <?= count($foto_booth) ?></p>
       </div>
     </div>

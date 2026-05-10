@@ -1280,6 +1280,7 @@ button {
 }
 
 /* ── BOOTH GALLERY ───────────────────────────────────────────────── */
+/* ── BOOTH GALLERY ───────────────────────────────────────────────── */
 .booth-gallery-section {
   border-bottom: 1px solid var(--c-border);
   background: var(--c-surface);
@@ -1298,27 +1299,23 @@ button {
   align-items: center;
   gap: 8px;
 }
+
+/* Grid dinamis berdasarkan jumlah foto */
 .booth-gallery-grid {
   display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-rows: repeat(2, 160px);
   gap: 8px;
   border-radius: var(--r-card);
   overflow: hidden;
 }
-.booth-count-1 {
-  grid-template-columns: 1fr;
+
+/* Foto pertama besar */
+.booth-thumb-main {
+  grid-column: 1 / 2;
+  grid-row: 1 / 3;
 }
-.booth-count-2 {
-  grid-template-columns: 2fr 1fr;
-}
-.booth-count-3 {
-  grid-template-columns: 2fr 1fr;
-  grid-template-rows: repeat(2, 160px);
-}
-.booth-count-4,
-.booth-count-5 {
-  grid-template-columns: 2fr 1fr 1fr;
-  grid-template-rows: repeat(2, 160px);
-}
+
 .booth-thumb {
   position: relative;
   overflow: hidden;
@@ -1326,21 +1323,18 @@ button {
   cursor: pointer;
   border-radius: var(--r-sm);
 }
+
 .booth-thumb img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.35s;
+  transition: transform 0.35s ease;
 }
+
 .booth-thumb:hover img {
   transform: scale(1.05);
 }
-.booth-thumb-main {
-  grid-row: span 2;
-}
-.booth-count-1 .booth-thumb {
-  height: 380px;
-}
+
 .booth-thumb-caption {
   position: absolute;
   bottom: 0;
@@ -1353,13 +1347,16 @@ button {
   opacity: 0;
   transition: opacity 0.2s;
 }
+
 .booth-thumb:hover .booth-thumb-caption {
   opacity: 1;
 }
+
 .booth-more-overlay {
   position: absolute;
   inset: 0;
   background: rgba(26, 18, 8, 0.6);
+  backdrop-filter: blur(3px);
   display: flex;
   align-items: center;
   justify-content: center;
