@@ -1731,3 +1731,98 @@ button {
   padding: 20px;
   font-size: 13px;
 }
+
+@media (max-width: 1200px) {
+  :root {
+    --sidebar-w: 220px;
+  }
+}
+@media (max-width: 960px) {
+  .page-layout {
+    grid-template-columns: 1fr;
+  }
+  .sidebar {
+    position: static;
+  }
+  .sidebar-left {
+    order: 2;
+  }
+  .main-content {
+    order: 1;
+  }
+  .sidebar-right {
+    order: 3;
+  }
+  .sidebar-left,
+  .sidebar-right {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .sidebar-card {
+    margin-bottom: 0;
+  }
+  .detail-hero-inner,
+  .menu-detail-inner {
+    grid-template-columns: 1fr;
+  }
+  .detail-hero-img {
+    max-width: 360px;
+  }
+  .jadwal-week-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media (max-width: 660px) {
+  .filter-bar-inner {
+    height: auto;
+    padding: 10px 16px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .filter-group {
+    padding: 0;
+  }
+  .filter-divider {
+    display: none;
+  }
+  .header-inner {
+    padding: 0 14px;
+  }
+  .page-layout {
+    padding: 16px 14px;
+  }
+  .umkm-grid {
+    grid-template-columns: 1fr;
+  }
+  .sidebar-left,
+  .sidebar-right {
+    grid-template-columns: 1fr;
+  }
+  .search-umkm-card {
+    flex-direction: column;
+  }
+  .search-card-img {
+    width: 100%;
+    height: 140px;
+  }
+  .booth-count-2,
+  .booth-count-3,
+  .booth-count-4,
+  .booth-count-5 {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+  .booth-thumb-main {
+    grid-row: span 1;
+  }
+  .ekstra-cols {
+    grid-template-columns: 1fr;
+  }
+  .jadwal-week-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .menu-jadwal-pills {
+    gap: 4px;
+  }
+}
