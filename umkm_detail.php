@@ -231,7 +231,7 @@ function halalBadge($status) {
                 <span class="day-name"><?= $h ?></span>
                 <?php if ($ada): ?>
                   <span class="day-jam"><?= substr($jadwal_map[$h]['jam_buka'], 0, 5) ?></span>
-                  <span class="day-sep">–</span>
+                  <span class="day-sep">-</span>
                   <span class="day-jam"><?= substr($jadwal_map[$h]['jam_tutup'], 0, 5) ?></span>
                 <?php else: ?>
                   <span class="day-tutup-label">Tutup</span>
@@ -282,7 +282,7 @@ function halalBadge($status) {
         <div class="booth-gallery-grid booth-count-<?= min(count($foto_booth), 5) ?>">
           <?php foreach (array_slice($foto_booth, 0, 5) as $i => $f): ?>
           <div class="booth-thumb <?php if ($i == 0) { echo 'booth-thumb-main'; } ?>" onclick="openLightbox(<?= $i ?>)">
-            <img src="<?= htmlspecialchars($f['url_foto']) ?>" alt="<?= htmlspecialchars($f['keterangan'] ?? 'Foto booth ' . ($i + 1)) ?>">
+            <img src="images/booth/<?= htmlspecialchars($f['url_foto']) ?>" alt="<?= htmlspecialchars($f['keterangan'] ?? 'Foto booth ' . ($i + 1)) ?>">
             <?php if (!empty($f['keterangan'])): ?>
               <div class="booth-thumb-caption"><?= htmlspecialchars($f['keterangan']) ?></div>
             <?php endif; ?>
@@ -299,7 +299,7 @@ function halalBadge($status) {
       <div class="lightbox-overlay" onclick="closeLightbox()"></div>
       <div class="lightbox-content">
         <button class="lb-close" onclick="closeLightbox()">✕</button>
-        <button class="lb-prev" id="lbPrev">‹</button>
+        <button class="lb-prev" id="lbPrev"><</button>
         <div class="lb-img-wrap">
           <img id="lbImg" src="" alt="">
           <p id="lbCaption" class="lb-caption"></p>
@@ -308,33 +308,6 @@ function halalBadge($status) {
         <p class="lb-counter"><span id="lbCurrent">1</span> / <?= count($foto_booth) ?></p>
       </div>
     </div>
-
-    <script>
-      var _photos = <?= json_encode(array_map(
-        function($f) { return ['url' => $f['url_foto'], 'ket' => $f['keterangan'] ?? '']; },
-        $foto_booth
-      )) ?>;
-      var _lbIdx = 0;
-      function openLightbox(i) { _lbIdx = i; _lbUpdate(); $("#lightbox").fadeIn(180); $("body").css("overflow", "hidden"); }
-      function closeLightbox() { $("#lightbox").fadeOut(140); $("body").css("overflow", ""); }
-      function _lbUpdate() {
-        var p = _photos[_lbIdx];
-        $("#lbImg").attr("src", p.url);
-        $("#lbCaption").text(p.ket);
-        $("#lbCurrent").text(_lbIdx + 1);
-      }
-      $(function() {
-        $("#lbNext").on("click", function() { _lbIdx = (_lbIdx + 1) % _photos.length; _lbUpdate(); });
-        $("#lbPrev").on("click", function() { _lbIdx = (_lbIdx - 1 + _photos.length) % _photos.length; _lbUpdate(); });
-        $(document).on("keydown", function(e) {
-          if ($("#lightbox").is(":visible")) {
-            if (e.key === "ArrowRight") { $("#lbNext").click(); }
-            if (e.key === "ArrowLeft")  { $("#lbPrev").click(); }
-            if (e.key === "Escape")     { closeLightbox(); }
-          }
-        });
-      });
-    </script>
     <?php endif; ?>
 
     <div class="detail-menu-section">
