@@ -631,9 +631,6 @@ button {
   border: 1px solid #ffcc80;
   transition: background 0.15s;
 }
-.mitra-link:hover {
-  background: #ffe0b2;
-}
 .mitra-tag {
   font-size: 12px;
   padding: 2px 8px;

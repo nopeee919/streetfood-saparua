@@ -1,5 +1,6 @@
 <?php
 include 'koneksi.php';
+date_default_timezone_set('Asia/Jakarta');
 
 if (isset($_GET['filter'])) {
   $filter_type = $_GET['filter'];
@@ -32,8 +33,9 @@ if (isset($_GET['rasa'])) {
   $rasa_id = '';
 }
 
-$hari_ini   = hariIniID();
+$hari_ini = hariIniID();
 $semua_hari = ['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu','Minggu'];
+$now_time = date('H:i:s');
 
 $halal_data = [];
 $sql_halal = "SELECT status_halal, COUNT(*) as jumlah
@@ -182,6 +184,16 @@ if ($filter_type === 'jam' && $jam_input) {
 
 $filter_count = count($umkm_list);
 
+function getIsOpen($koneksi, $umkm_id, $hari_ini, $now_time) {
+  $id = (int)$umkm_id;
+  $result = mysqli_query($koneksi,"SELECT jam_buka, jam_tutup FROM JADWAL
+                                  WHERE id_umkm = $id AND hari = '$hari_ini' LIMIT 1");
+  if ($row = mysqli_fetch_assoc($result)) {
+    return ($now_time >= $row['jam_buka'] && $now_time <= $row['jam_tutup']);
+  }
+  return false;
+}
+
 function getFilteredMenu($koneksi, $umkm_id, $filter_type, $harga_min, $harga_max, $rasa_id) {
   $menu = [];
   if ($filter_type === 'harga') {
@@ -226,18 +238,6 @@ function getMitraUmkm($koneksi, $umkm_id) {
     $mitra[] = $row;
   }
   return $mitra;
-}
-
-$buka_ids = [];
-$now_time = date('H:i:s');
-$sql_buka = "SELECT id_umkm
-              FROM JADWAL
-              WHERE hari = '$hari_ini'
-              AND jam_buka <= '$now_time'
-              AND jam_tutup >= '$now_time'";
-$result_buka = mysqli_query($koneksi, $sql_buka);
-while ($row = mysqli_fetch_assoc($result_buka)) {
-  $buka_ids[] = $row['id_umkm'];
 }
 ?>
 
@@ -302,7 +302,7 @@ while ($row = mysqli_fetch_assoc($result_buka)) {
                 </option>
               <?php endforeach; ?>
             </select>
-            <input type="time" name="jam" value="<?= htmlspecialchars($jam_input) ?>" required />
+            <input type="time" name="jam" value="<?= $jam_input ?>" required />
             <?php
             $class = '';
             if ($filter_type == 'jam') {
@@ -318,9 +318,9 @@ while ($row = mysqli_fetch_assoc($result_buka)) {
           <div class="filter-group">
             <label>💰 Range Harga</label>
             <div class="range-inputs">
-              <input type="number" name="harga_min" placeholder="Min" value="<?= htmlspecialchars($harga_min) ?>" min="0" />
+              <input type="number" name="harga_min" placeholder="Min" value="<?= $harga_min ?>" min="0" />
               <span>-</span>
-              <input type="number" name="harga_max" placeholder="Max" value="<?= htmlspecialchars($harga_max) ?>" min="0" />
+              <input type="number" name="harga_max" placeholder="Max" value="<?= $harga_max ?>" min="0" />
             </div>
             <?php
             $class = '';
@@ -340,7 +340,7 @@ while ($row = mysqli_fetch_assoc($result_buka)) {
               <option value="">Pilih rasa...</option>
               <?php foreach ($rasa_all as $r): ?>
               <option value="<?= $r['id_rasa'] ?>" <?= $rasa_id==$r['id_rasa']?'selected':'' ?>>
-                <?= htmlspecialchars($r['nama_rasa']) ?> (<?= $r['jumlah_umkm'] ?> UMKM)
+                <?= $r['nama_rasa'] ?> (<?= $r['jumlah_umkm'] ?> UMKM)
               </option>
               <?php endforeach; ?>
             </select>
@@ -376,7 +376,7 @@ while ($row = mysqli_fetch_assoc($result_buka)) {
               }
             ?>
             <div class="sidebar-row">
-              <span class="sidebar-row-label"><?= htmlspecialchars($h['status_halal']) ?></span>
+              <span class="sidebar-row-label"><?= ($h['status_halal']) ?></span>
               <span class="badge badge-<?= $badge_color ?>"><?= $h['jumlah'] ?></span>
             </div>
           <?php endforeach; ?>
@@ -387,7 +387,7 @@ while ($row = mysqli_fetch_assoc($result_buka)) {
           </h3>
           <?php foreach ($bayar_data as $b): ?>
             <div class="sidebar-row">
-              <span class="sidebar-row-label"><?= htmlspecialchars($b['metode_pembayaran']) ?></span>
+              <span class="sidebar-row-label"><?= ($b['metode_pembayaran']) ?></span>
               <span class="badge badge-blue"><?= $b['jumlah'] ?></span>
             </div>
           <?php endforeach; ?>
@@ -400,7 +400,11 @@ while ($row = mysqli_fetch_assoc($result_buka)) {
                   $non_cash[] = $b['metode_pembayaran'];
                 }
               }
-              echo implode(', ', $non_cash) ?: '–';
+              if (!empty($non_cash)) {
+                echo implode(', ', $non_cash);
+              } else {
+                echo '-';
+              }
             ?>
           </p>
         </div>
@@ -410,7 +414,7 @@ while ($row = mysqli_fetch_assoc($result_buka)) {
         <?php if ($active_filter): ?>
         <div class="filter-result-header">
           <div class="filter-result-info">
-            <span class="filter-result-tag"><?= htmlspecialchars($filter_label) ?></span>
+            <span class="filter-result-tag"><?= $filter_label ?></span>
             <strong><?= $filter_count ?> UMKM</strong> ditemukan
           </div>
           <a href="index.php" class="link-reset">Lihat semua UMKM →</a>
@@ -424,7 +428,6 @@ while ($row = mysqli_fetch_assoc($result_buka)) {
 
         <div class="umkm-grid">
           <?php foreach ($umkm_list as $u):
-            $is_buka = in_array($u['id_umkm'], $buka_ids);
             if ($filter_type === 'jam') {
               $mitra_links = getMitraUmkm($koneksi, $u['id_umkm']);
             } else {
@@ -435,18 +438,31 @@ while ($row = mysqli_fetch_assoc($result_buka)) {
             } else {
               $filtered_menu = [];
             }
+            if (!$active_filter) {
+              $is_open = getIsOpen($koneksi, $u['id_umkm'], $hari_ini, $now_time);
+            } else {
+              $is_open = false;
+            }
           ?>
           <article class="umkm-card" onclick="window.location='umkm_detail.php?id=<?= $u['id_umkm'] ?>'">
             <div class="card-img-wrap">
               <?php if (!empty($u['foto']) && file_exists("images/" . $u['foto'])): ?>
-                <img src="images/<?= htmlspecialchars($u['foto']) ?>" alt="<?= htmlspecialchars($u['nama_stand']) ?>" loading="lazy">
+                <img src="images/<?= $u['foto'] ?>" alt="<?= $u['nama_stand'] ?>" loading="lazy">
               <?php else: ?>
                 <div class="card-img-placeholder">🍽️</div>
               <?php endif; ?>
-              <span class="card-kategori"><?= htmlspecialchars($u['jenis_kategori'] ?? 'Umum') ?></span>
+              <span class="card-kategori">
+                <?php
+                if (isset($u['jenis_kategori'])) {
+                  echo $u['jenis_kategori'];
+                } else {
+                  echo 'Umum';
+                }
+                ?>
+              </span>
               <?php if (!$active_filter): ?>
                 <?php
-                if ($is_buka) {
+                if ($is_open) {
                   $status_class = 'open';
                   $status_text  = '● Buka';
                 } else {
@@ -461,27 +477,27 @@ while ($row = mysqli_fetch_assoc($result_buka)) {
             </div>
 
             <div class="card-body">
-              <h3 class="card-title"><?= htmlspecialchars($u['nama_stand']) ?></h3>
+              <h3 class="card-title"><?= ($u['nama_stand']) ?></h3>
               <p class="card-owner">
                 <span>👤</span>
-                <?= htmlspecialchars($u['nama_pemilik']) ?>
+                <?= ($u['nama_pemilik']) ?>
               </p>
 
               <?php if ($filter_type === 'jam' && !empty($u['jam_buka'])): ?>
                 <p class="card-jadwal">
                   <span>🕗</span>
-                  <?= htmlspecialchars($u['hari']) ?>
+                  <?= $u['hari'] ?>
                   <?= substr($u['jam_buka'], 0, 5) ?> - <?= substr($u['jam_tutup'], 0, 5) ?>
                 </p>
                 <?php if (!empty($mitra_links)): ?>
                   <div class="card-mitra">
                     <?php foreach ($mitra_links as $m): ?>
                       <?php if ($m['link_mitra']): ?>
-                        <a href="<?= htmlspecialchars($m['link_mitra']) ?>" target="_blank" class="mitra-link" onclick="event.stopPropagation()">
-                          <?= htmlspecialchars($m['nama_mitra']) ?> ↗
-                        </a>
+                        <div class="mitra-link">
+                          <?= $m['nama_mitra'] ?>
+                        </div>
                       <?php else: ?>
-                        <span class="mitra-tag"><?= htmlspecialchars($m['nama_mitra']) ?></span>
+                        <span class="mitra-tag"><?= $m['nama_mitra'] ?></span>
                       <?php endif; ?>
                     <?php endforeach; ?>
                   </div>
@@ -492,10 +508,17 @@ while ($row = mysqli_fetch_assoc($result_buka)) {
                 <div class="card-menu-list">
                   <p class="menu-list-label">Menu yang sesuai:</p>
                   <?php foreach ($filtered_menu as $mn): ?>
-                  <div class="menu-row">
-                    <span class="menu-name"><?= htmlspecialchars($mn['nama_menu']) ?></span>
-                    <span class="menu-price">Rp<?= number_format($mn['harga_menu'], 0, ',', '.') ?><?= $mn['satuan'] ? '/' . $mn['satuan'] : '' ?></span>
-                  </div>
+                    <div class="menu-row">
+                      <span class="menu-name"><?= $mn['nama_menu'] ?></span>
+                      <span class="menu-price">
+                        Rp<?= number_format($mn['harga_menu'], 0, ',', '.') ?>
+                        <?php
+                          if ($mn['satuan']) {
+                            echo '/' . $mn['satuan'];
+                          }
+                        ?>
+                      </span>                  
+                    </div>
                   <?php endforeach; ?>
                 </div>
               <?php endif; ?>
@@ -528,12 +551,12 @@ while ($row = mysqli_fetch_assoc($result_buka)) {
               }
             ?>
             <div class="sidebar-row <?= $class ?>">
-              <span class="sidebar-row-label"><?= $icon ?><?= htmlspecialchars($m['nama_mitra']) ?></span>
+              <span class="sidebar-row-label"><?= $icon ?><?= $m['nama_mitra'] ?></span>
               <span class="badge badge-orange"><?= $m['jumlah'] ?></span>
             </div>
           <?php endforeach; ?>
           <?php if (!empty($mitra_data)): ?>
-            <p class="sidebar-note">Terbanyak: <strong><?= htmlspecialchars($mitra_data[0]['nama_mitra']) ?></strong></p>
+            <p class="sidebar-note">Terbanyak: <strong><?= $mitra_data[0]['nama_mitra'] ?></strong></p>
           <?php endif; ?>
         </div>
         <div class="sidebar-card">
@@ -547,7 +570,7 @@ while ($row = mysqli_fetch_assoc($result_buka)) {
             ?>
             <div class="sidebar-row">
               <a href="?filter=rasa&rasa=<?= $r['id_rasa'] ?>" class="sidebar-rasa-link <?= $active_class ?>">
-                <?= htmlspecialchars($r['nama_rasa']) ?>
+                <?= $r['nama_rasa'] ?>
               </a>
               <span class="badge badge-purple"><?= $r['jumlah_umkm'] ?></span>
             </div>

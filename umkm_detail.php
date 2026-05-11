@@ -24,7 +24,6 @@ if (!$umkm) {
   exit;
 }
 
-// ─── JADWAL: ambil per hari, buat map ───────────────────────────
 $jadwal_map = [];
 $semua_hari = ['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu','Minggu'];
 $sql_jadwal = "SELECT hari, jam_buka, jam_tutup FROM JADWAL WHERE id_umkm = $id";
@@ -33,7 +32,6 @@ while ($row = mysqli_fetch_assoc($result_jadwal)) {
   $jadwal_map[$row['hari']] = $row;
 }
 
-// ─── CEK STATUS BUKA SEKARANG ────────────────────────────────────
 $hari_ini = hariIniID();
 $now_time = date('H:i:s');
 $is_open = false;
@@ -107,7 +105,7 @@ function halalBadge($status) {
   } elseif ($status == "Non-Halal") {
     return "<span class='halal-badge halal-red'>🚫 Non-Halal</span>";
   } else {
-    return "<span class='halal-badge halal-gray'>" . htmlspecialchars($status) . "</span>";
+    return "<span class='halal-badge halal-gray'>" . $status . "</span>";
   }
 }
 ?>
@@ -118,7 +116,7 @@ function halalBadge($status) {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
-      <?= htmlspecialchars($umkm['nama_stand']) ?> — StreetFood Saparua
+      <?= $umkm['nama_stand'] ?> — StreetFood Saparua
     </title>
     <link rel="stylesheet" href="style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -163,7 +161,7 @@ function halalBadge($status) {
       <div class="breadcrumb-inner">
         <a href="index.php">Beranda</a>
         <span>></span>
-        <span><?= htmlspecialchars($umkm['nama_stand']) ?></span>
+        <span><?= $umkm['nama_stand'] ?></span>
       </div>
     </div>
 
@@ -171,7 +169,7 @@ function halalBadge($status) {
       <div class="detail-hero-inner">
         <div class="detail-hero-img">
           <?php if (!empty($umkm['foto']) && file_exists("images/" . $umkm['foto'])): ?>
-            <img src="images/<?= htmlspecialchars($umkm['foto']) ?>" alt="Logo <?= htmlspecialchars($umkm['nama_stand']) ?>">
+            <img src="images/<?= $umkm['foto'] ?>" alt="Logo <?= $umkm['nama_stand'] ?>">
           <?php else: ?>
             <div class="detail-img-ph">🍽️</div>
           <?php endif; ?>
@@ -192,29 +190,28 @@ function halalBadge($status) {
         <div class="detail-hero-info">
           <div class="detail-tags">
             <?php if ($umkm['jenis_kategori']): ?>
-              <span class="detail-tag-kategori"><?= htmlspecialchars($umkm['jenis_kategori']) ?></span>
+              <span class="detail-tag-kategori"><?= $umkm['jenis_kategori'] ?></span>
             <?php endif; ?>
             <?= halalBadge($umkm['status_halal']) ?>
           </div>
-          <h1 class="detail-title"><?= htmlspecialchars($umkm['nama_stand']) ?></h1>
+          <h1 class="detail-title"><?= $umkm['nama_stand'] ?></h1>
           <p class="detail-owner">
             <span>👤</span>
-            Pemilik: <strong><?= htmlspecialchars($umkm['nama_pemilik']) ?></strong>
+            Pemilik: <strong><?= $umkm['nama_pemilik'] ?></strong>
           </p>
           <?php if (!empty($umkm['deskripsi'])): ?>
-            <p class="detail-desc"><?= nl2br(htmlspecialchars($umkm['deskripsi'])) ?></p>
+            <p class="detail-desc"><?= $umkm['deskripsi'] ?></p>
           <?php endif; ?>
           <?php if ($umkm['alamat']): ?>
             <p class="detail-location">
               <span>📍</span>
-              <?= htmlspecialchars($umkm['alamat']) ?>
+              <?= $umkm['alamat'] ?>
               <?php if ($umkm['koordinat']): ?>
                 <a href="https://maps.google.com/?q=<?= urlencode($umkm['koordinat']) ?>" target="_blank" class="maps-link">🗺️ Buka Maps</a>
               <?php endif; ?>
             </p>
           <?php endif; ?>
 
-          <!-- ─── JADWAL MINGGUAN (grid per hari) ─────────────── -->
           <div class="jadwal-section">
             <div class="jadwal-section-label">
               <span>🕗</span>
@@ -226,8 +223,8 @@ function halalBadge($status) {
                 $active = ($h === $hari_ini);
               ?>
               <div class="jadwal-day-card
-                          <?php if (!$ada)    { echo 'day-tutup'; } ?>
-                          <?php if ($active)  { echo ' day-today'; } ?>">
+                <?php if (!$ada) { echo 'day-tutup'; } ?>
+                <?php if ($active) { echo 'day-today'; } ?>">
                 <span class="day-name"><?= $h ?></span>
                 <?php if ($ada): ?>
                   <span class="day-jam"><?= substr($jadwal_map[$h]['jam_buka'], 0, 5) ?></span>
@@ -249,7 +246,7 @@ function halalBadge($status) {
             <span>💳</span>
             <strong>Pembayaran:</strong>
             <?php foreach ($bayar_list as $b): ?>
-              <span class="bayar-pill"><?= htmlspecialchars($b['metode_pembayaran']) ?></span>
+              <span class="bayar-pill"><?= $b['metode_pembayaran'] ?></span>
             <?php endforeach; ?>
           </div>
           <?php endif; ?>
@@ -260,11 +257,11 @@ function halalBadge($status) {
             <strong>Pesan Online:</strong>
             <?php foreach ($mitra_list as $m): ?>
               <?php if ($m['link_mitra']): ?>
-                <a href="<?= htmlspecialchars($m['link_mitra']) ?>" target="_blank" class="mitra-pill-link">
-                  <?= htmlspecialchars($m['nama_mitra']) ?> ↗
+                <a href="<?= $m['link_mitra'] ?>" target="_blank" class="mitra-pill-link">
+                  <?= $m['nama_mitra'] ?> ↗
                 </a>
               <?php else: ?>
-                <span class="mitra-pill"><?= htmlspecialchars($m['nama_mitra']) ?></span>
+                <span class="mitra-pill"><?= $m['nama_mitra'] ?></span>
               <?php endif; ?>
             <?php endforeach; ?>
           </div>
@@ -282,9 +279,9 @@ function halalBadge($status) {
         <div class="booth-gallery-grid booth-count-<?= min(count($foto_booth), 5) ?>">
           <?php foreach (array_slice($foto_booth, 0, 5) as $i => $f): ?>
           <div class="booth-thumb <?php if ($i == 0) { echo 'booth-thumb-main'; } ?>" onclick="openLightbox(<?= $i ?>)">
-            <img src="images/booth/<?= htmlspecialchars($f['url_foto']) ?>" alt="<?= htmlspecialchars($f['keterangan'] ?? 'Foto booth ' . ($i + 1)) ?>">
+            <img src="images/booth/<?= $f['url_foto'] ?>" alt="<?php if (isset($f['keterangan'])) { echo $f['keterangan']; } else { echo 'Foto booth ' . ($i + 1); } ?>">
             <?php if (!empty($f['keterangan'])): ?>
-              <div class="booth-thumb-caption"><?= htmlspecialchars($f['keterangan']) ?></div>
+              <div class="booth-thumb-caption"><?= $f['keterangan'] ?></div>
             <?php endif; ?>
             <?php if ($i === 3 && count($foto_booth) > 4): ?>
               <div class="booth-more-overlay">+<?= count($foto_booth) - 4 ?> lagi</div>
@@ -326,7 +323,7 @@ function halalBadge($status) {
           <a href="menu_detail.php?id=<?= $mn['id_menu'] ?>" class="menu-card menu-card-link">
             <div class="menu-card-img">
               <?php if (!empty($mn['foto_menu']) && file_exists("images/" . $mn['foto_menu'])): ?>
-                <img src="images/<?= htmlspecialchars($mn['foto_menu']) ?>" alt="<?= htmlspecialchars($mn['nama_menu']) ?>">
+                <img src="images/<?= $mn['foto_menu'] ?>" alt="<?= $mn['nama_menu'] ?>">
               <?php else: ?>
                 <div class="menu-img-ph-big">🍴</div>
               <?php endif; ?>
@@ -335,18 +332,18 @@ function halalBadge($status) {
               <?php endif; ?>
             </div>
             <div class="menu-card-body">
-              <h4 class="menu-card-name"><?= htmlspecialchars($mn['nama_menu']) ?></h4>
+              <h4 class="menu-card-name"><?= $mn['nama_menu'] ?></h4>
               <?php if ($mn['rasa_list']): ?>
               <p class="menu-card-rasa">
                 <?php foreach (explode(', ', $mn['rasa_list']) as $r): ?>
-                  <span class="rasa-chip"><?= htmlspecialchars(trim($r)) ?></span>
+                  <span class="rasa-chip"><?= $r ?></span>
                 <?php endforeach; ?>
               </p>
               <?php endif; ?>
               <p class="menu-card-price">
                 Rp<?= number_format($mn['harga_menu'], 0, ',', '.') ?>
                 <?php if (!empty($mn['satuan'])): ?>
-                  <span class="menu-satuan">/ <?= htmlspecialchars($mn['satuan']) ?></span>
+                  <span class="menu-satuan">/ <?= $mn['satuan'] ?></span>
                 <?php endif; ?>
               </p>
               <span class="menu-card-detail-link">Lihat detail →</span>
@@ -365,7 +362,7 @@ function halalBadge($status) {
           <span>+</span> Ekstra Berlaku untuk Semua Menu
         </h2>
         <p class="ekstra-section-sub">
-          Tambahan berikut bisa dipesan bersama menu apapun di <?= htmlspecialchars($umkm['nama_stand']) ?>
+          Tambahan berikut bisa dipesan bersama menu apapun di <?= $umkm['nama_stand'] ?>
         </p>
         <div class="ekstra-cols">
           <div class="ekstra-col ekstra-col-full">
@@ -381,9 +378,9 @@ function halalBadge($status) {
                 <?php foreach ($ekstra_umkm as $e): ?>
                 <div class="ekstra-row">
                   <div class="ekstra-row-info">
-                    <span class="ekstra-nama"><?= htmlspecialchars($e['nama_ekstra']) ?></span>
+                    <span class="ekstra-nama"><?= $e['nama_ekstra'] ?></span>
                     <?php if ($e['keterangan']): ?>
-                      <span class="ekstra-ket"><?= htmlspecialchars($e['keterangan']) ?></span>
+                      <span class="ekstra-ket"><?= $e['keterangan'] ?></span>
                     <?php endif; ?>
                   </div>
                   <span class="ekstra-harga">

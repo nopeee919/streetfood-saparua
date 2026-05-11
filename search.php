@@ -63,7 +63,7 @@ $total = count($umkm_combined);
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hasil: "<?= htmlspecialchars($q) ?>" — StreetFood Saparua</title>
+  <title>Hasil: "<?= $q ?>" — StreetFood Saparua</title>
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
@@ -78,7 +78,7 @@ $total = count($umkm_combined);
         </a>
         <div class="search-wrapper">
           <form class="search-bar" id="searchForm" action="search.php" method="GET">
-            <input type="text" name="q" id="searchInput" value="<?= htmlspecialchars($q) ?>" placeholder="Cari nama UMKM atau menu..." autocomplete="off">
+            <input type="text" name="q" id="searchInput" value="<?= $q ?>" placeholder="Cari nama UMKM atau menu..." autocomplete="off">
             <button type="submit">
               <span>🔍</span>
             </button>
@@ -91,7 +91,7 @@ $total = count($umkm_combined);
     <div class="search-result-bar">
       <div class="search-result-inner">
         <div class="search-meta">
-          <span class="search-keyword">Hasil: "<strong><?= htmlspecialchars($q) ?></strong>"</span>
+          <span class="search-keyword">Hasil: "<strong><?= $q ?></strong>"</span>
           <span class="search-count"><?= $total ?> UMKM ditemukan</span>
         </div>
         <a href="index.php" class="link-back">← Kembali ke Beranda</a>
@@ -102,7 +102,7 @@ $total = count($umkm_combined);
       <?php if (empty($umkm_combined)): ?>
         <div class="empty-state solo">
           <span>😶</span>
-          <p>Tidak ada UMKM atau menu yang cocok dengan "<strong><?= htmlspecialchars($q) ?></strong>"</p>
+          <p>Tidak ada UMKM atau menu yang cocok dengan "<strong><?= $q ?></strong>"</p>
           <a href="index.php">← Kembali ke beranda</a>
         </div>
       <?php else: ?>
@@ -118,14 +118,14 @@ $total = count($umkm_combined);
             <div class="search-umkm-card" onclick="window.location='umkm_detail.php?id=<?= $u['id_umkm'] ?>'">
               <div class="search-card-img">
                 <?php if (!empty($u['foto']) && file_exists("images/" . $u['foto'])): ?>
-                  <img src="images/<?= htmlspecialchars($u['foto']) ?>" alt="<?= htmlspecialchars($u['nama_stand']) ?>">
+                  <img src="images/<?= $u['foto'] ?>" alt="<?= $u['nama_stand'] ?>">
                 <?php else: ?>
                   <div class="search-img-placeholder">🍽️</div>
                 <?php endif; ?>
               </div>
               <div class="search-card-info">
                 <div class="search-card-top">
-                  <h3><?= htmlspecialchars($u['nama_stand']) ?></h3>
+                  <h3><?= $u['nama_stand'] ?></h3>
                   <?php if (in_array($u['id_umkm'],$umkm_by_name_ids)): ?>
                     <span class="match-badge match-name">nama cocok</span>
                   <?php else: ?>
@@ -134,27 +134,27 @@ $total = count($umkm_combined);
                 </div>
                 <p class="search-owner">
                   <span>👤</span>
-                  <?= htmlspecialchars($u['nama_pemilik']) ?>
+                  <?= $u['nama_pemilik'] ?>
                 </p>
                 <?php if ($u['jenis_kategori']): ?>
-                  <span class="search-kategori"><?= htmlspecialchars($u['jenis_kategori']) ?></span>
+                  <span class="search-kategori"><?= $u['jenis_kategori'] ?></span>
                 <?php endif; ?>
-                <a href="umkm_detail.php?id=<?= $u['id_umkm'] ?>" class="search-detail-btn" onclick="event.stopPropagation()">Lihat Detail →</a>
+                <span class="card-detail-link">Lihat Detail →</span>
               </div>
             </div>
             <?php if (!empty($matching_menus)): ?>
               <div class="search-menu-results">
-                <p class="menu-match-label">Menu yang cocok dengan "<?= htmlspecialchars($q) ?>":</p>
+                <p class="menu-match-label">Menu yang cocok dengan "<?= $q ?>":</p>
                 <div class="search-menu-grid">
                   <?php foreach ($matching_menus as $mn): ?>
                     <a href="menu_detail.php?id=<?= $mn['id_menu'] ?>" class="search-menu-item">
                       <?php if (!empty($mn['foto_menu']) && file_exists("images/" . $mn['foto_menu'])): ?>
-                        <img src="images/<?= htmlspecialchars($mn['foto_menu']) ?>" alt="<?= htmlspecialchars($mn['nama_menu']) ?>">
+                        <img src="images/<?= $mn['foto_menu'] ?>" alt="<?= $mn['nama_menu'] ?>">
                       <?php else: ?>
                         <div class="menu-img-ph">🍴</div>
                       <?php endif; ?>
                       <div>
-                        <span class="search-menu-name"><?= htmlspecialchars($mn['nama_menu']) ?></span>
+                        <span class="search-menu-name"><?= $mn['nama_menu'] ?></span>
                         <span class="search-menu-price">Rp<?= number_format($mn['harga_menu'],0,',','.') ?><?= $mn['satuan']?'/'.$mn['satuan']:'' ?></span>
                       </div>
                     </a>
