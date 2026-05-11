@@ -412,6 +412,6 @@ function halalBadge($status) {
     </footer>
 
     <script src="script.js"></script>
-    <script src="appUmkm.js"></script>
+    <script src="app.js"></script>
   </body>
 </html>

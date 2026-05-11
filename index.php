@@ -559,6 +559,6 @@ while ($row = mysqli_fetch_assoc($result_buka)) {
     <footer class="site-footer">
       <p>© 2026 StreetFood Saparua — Sistem Manajemen Basis Data</p>
     </footer>
+    <script src="app.js"></script>
   </body>
-  <script src="appIndex.js"></script>
 </html>
