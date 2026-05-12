@@ -1,0 +1,1416 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: May 12, 2026 at 07:10 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `db_streetfood_saparuafinal`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ekstra_menu`
+--
+
+CREATE TABLE `ekstra_menu` (
+  `id_ekstra_menu` int(11) NOT NULL,
+  `id_menu` int(11) NOT NULL,
+  `nama_ekstra` varchar(100) NOT NULL,
+  `harga_ekstra` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `keterangan` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `ekstra_menu`
+--
+
+INSERT INTO `ekstra_menu` (`id_ekstra_menu`, `id_menu`, `nama_ekstra`, `harga_ekstra`, `keterangan`) VALUES
+(1, 1, 'Ceker', 5000.00, 'Tambahan ceker'),
+(2, 1, 'Bakso', 4000.00, 'Tambahan bakso'),
+(3, 2, 'Level Pedas Extra', 3000.00, 'Pedas lebih tinggi'),
+(4, 4, 'Espresso Shot', 5000.00, 'Extra shot kopi'),
+(5, 4, 'Boba', 4000.00, 'Topping boba'),
+(6, 7, 'Saus Mentai', 6000.00, 'Extra saus'),
+(7, 10, 'Extra Cheese', 7000.00, 'Tambahan keju'),
+(8, 12, 'Keju Mozzarella', 12000.00, 'Extra mozzarella'),
+(9, 16, 'Nori', 3000.00, 'Tambahan nori'),
+(10, 18, 'Mie', 5000.00, 'Extra mie'),
+(11, 22, 'Oreo Crumbs', 5000.00, 'Extra topping'),
+(12, 27, 'Telur', 5000.00, 'Tambah telur'),
+(13, 27, 'Sosis', 6000.00, 'Tambah sosis'),
+(14, 28, 'Bakso', 7000.00, 'Tambah bakso'),
+(15, 29, 'Udang Extra', 10000.00, 'Tambah seafood'),
+(16, 33, 'Keju Mozzarella', 12000.00, 'Extra mozzarella'),
+(17, 34, 'Sambal Extra', 3000.00, 'Tambah sambal'),
+(18, 35, 'Keju Leleh', 7000.00, 'Tambah keju'),
+(19, 37, 'Mozzarella', 10000.00, 'Tambah mozzarella'),
+(20, 39, 'Nasi', 5000.00, 'Tambah nasi'),
+(21, 40, 'Double Daging', 10000.00, 'Extra beef'),
+(22, 41, 'Keju', 5000.00, 'Tambah keju'),
+(23, 42, 'Mozzarella', 8000.00, 'Tambah mozzarella'),
+(24, 45, 'French Fries', 12000.00, 'Kentang goreng'),
+(25, 46, 'Level Pedas', 2000.00, 'Pedas extra'),
+(26, 47, 'Bumbu Extra', 2000.00, 'Tambah bumbu'),
+(27, 48, 'Saus Keju', 5000.00, 'Tambah saus'),
+(28, 52, 'Ice Cream Vanilla', 7000.00, 'Tambah ice cream'),
+(29, 53, 'Oreo Crumbs', 5000.00, 'Tambah oreo'),
+(30, 58, 'Nasi Putih', 5000.00, 'Tambah nasi'),
+(31, 59, 'Saus Extra', 6000.00, 'Tambah saus'),
+(32, 61, 'Jagung Bakar', 8000.00, 'Tambah jagung'),
+(33, 64, 'Curry Sauce', 7000.00, 'Tambah saus curry'),
+(34, 65, 'Mozzarella', 12000.00, 'Tambah mozzarella'),
+(35, 68, 'Telur Onsen', 8000.00, 'Tambah telur'),
+(36, 70, 'Keju Extra', 5000.00, 'Tambah keju'),
+(37, 71, 'Topping Oreo', 5000.00, 'Tambah oreo'),
+(38, 75, 'Ice Cream', 8000.00, 'Tambah ice cream'),
+(39, 76, 'Boba', 4000.00, 'Tambah topping'),
+(40, 77, 'Lemon Slice', 3000.00, 'Tambah lemon'),
+(41, 81, 'Cream Cheese', 7000.00, 'Tambah cream'),
+(42, 82, 'Meses Extra', 3000.00, 'Tambah meses'),
+(43, 83, 'Cream Filling', 5000.00, 'Tambah cream'),
+(44, 87, 'Box Premium', 15000.00, 'Upgrade box'),
+(45, 88, 'Telur Onsen', 7000.00, 'Tambah telur'),
+(46, 89, 'Chicken Katsu', 12000.00, 'Tambah chicken'),
+(47, 92, 'Mentai Sauce', 9000.00, 'Tambah mentai'),
+(48, 94, 'Keju Bubuk', 3000.00, 'Tambah keju'),
+(49, 95, 'Level 10', 4000.00, 'Pedas maksimal'),
+(50, 98, 'Sosis', 6000.00, 'Tambah sosis'),
+(51, 100, 'Ice Cream', 8000.00, 'Tambah ice cream'),
+(52, 101, 'Matcha Sauce', 5000.00, 'Tambah saus'),
+(53, 105, 'Whipped Cream', 7000.00, 'Tambah cream'),
+(54, 106, 'Bakso', 7000.00, 'Tambah bakso'),
+(55, 107, 'Pangsit Goreng', 8000.00, 'Tambah pangsit'),
+(56, 110, 'Seafood Extra', 15000.00, 'Tambah seafood'),
+(57, 112, 'Keju Mozzarella', 10000.00, 'Tambah mozzarella'),
+(58, 113, 'Saus BBQ', 4000.00, 'Tambah saus'),
+(59, 117, 'French Fries', 12000.00, 'Tambah kentang'),
+(60, 120, 'Extra Ceker', 7000.00, 'Tambah ceker'),
+(61, 124, 'Espresso Shot', 6000.00, 'Extra shot'),
+(62, 130, 'Saus Mentai', 8000.00, 'Tambah saus'),
+(63, 136, 'Double Patty', 15000.00, 'Tambah daging'),
+(64, 142, 'Keju Extra', 10000.00, 'Tambah keju'),
+(65, 148, 'Level 10', 4000.00, 'Pedas maksimal'),
+(66, 154, 'Wasabi', 3000.00, 'Tambah wasabi'),
+(67, 160, 'Mie Extra', 5000.00, 'Tambah mie'),
+(68, 166, 'Boba', 5000.00, 'Tambah topping'),
+(69, 172, 'Ice Cream', 8000.00, 'Tambah ice cream'),
+(70, 178, 'Cheese Sauce', 7000.00, 'Tambah saus'),
+(71, 184, 'Avocado Extra', 10000.00, 'Tambah alpukat');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ekstra_umkm`
+--
+
+CREATE TABLE `ekstra_umkm` (
+  `id_ekstra_umkm` int(11) NOT NULL,
+  `id_umkm` int(11) NOT NULL,
+  `nama_ekstra` varchar(100) NOT NULL,
+  `harga_ekstra` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `keterangan` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `ekstra_umkm`
+--
+
+INSERT INTO `ekstra_umkm` (`id_ekstra_umkm`, `id_umkm`, `nama_ekstra`, `harga_ekstra`, `keterangan`) VALUES
+(1, 1, 'Nasi', 5000.00, 'Tambahan nasi'),
+(2, 2, 'Cup Large', 4000.00, 'Ukuran lebih besar'),
+(3, 3, 'Teh Oolong', 12000.00, 'Minuman tambahan'),
+(4, 4, 'French Fries', 15000.00, 'Kentang goreng'),
+(5, 5, 'Es Teh', 6000.00, 'Minuman dingin'),
+(6, 6, 'Sambal Extra', 3000.00, 'Tambah sambal'),
+(7, 7, 'Miso Soup', 10000.00, 'Sup miso'),
+(8, 8, 'Kerupuk', 2000.00, 'Kerupuk udang'),
+(9, 9, 'Boba', 5000.00, 'Tambah topping'),
+(10, 10, 'Susu', 4000.00, 'Tambah susu'),
+(11, 13, 'Es Teh', 5000.00, 'Minuman dingin'),
+(12, 13, 'Kerupuk', 3000.00, 'Kerupuk udang'),
+(13, 14, 'Nasi Putih', 5000.00, 'Tambah nasi'),
+(14, 14, 'Lemon Tea', 8000.00, 'Minuman lemon'),
+(15, 15, 'French Fries', 15000.00, 'Kentang goreng'),
+(16, 15, 'Soft Drink', 10000.00, 'Minuman soda'),
+(17, 16, 'Saus Keju', 5000.00, 'Tambahan saus'),
+(18, 16, 'Mayo Pedas', 4000.00, 'Tambahan mayo'),
+(19, 17, 'Ice Cream Cup', 12000.00, 'Cup ice cream'),
+(20, 17, 'Milkshake', 15000.00, 'Milkshake vanilla'),
+(21, 18, 'Nasi', 5000.00, 'Nasi putih'),
+(22, 18, 'Es Jeruk', 7000.00, 'Minuman segar'),
+(23, 19, 'Miso Soup', 10000.00, 'Sup miso'),
+(24, 19, 'Ocha', 8000.00, 'Teh Jepang'),
+(25, 20, 'Ice Cream Vanilla', 10000.00, 'Es krim vanilla'),
+(26, 20, 'Es Coklat', 12000.00, 'Minuman coklat'),
+(27, 21, 'Cup Jumbo', 5000.00, 'Ukuran lebih besar'),
+(28, 21, 'Boba Topping', 4000.00, 'Tambah boba'),
+(29, 22, 'Coffee Latte', 18000.00, 'Kopi latte'),
+(30, 22, 'Milkshake', 20000.00, 'Milkshake coklat'),
+(31, 23, 'Ocha Dingin', 8000.00, 'Teh dingin'),
+(32, 23, 'Gyoza', 18000.00, 'Side dish'),
+(33, 24, 'Cheese Sauce', 5000.00, 'Saus keju'),
+(34, 24, 'Soda Gembira', 12000.00, 'Minuman soda'),
+(35, 25, 'Americano', 20000.00, 'Kopi hitam'),
+(36, 25, 'Vanilla Latte', 25000.00, 'Kopi vanilla'),
+(37, 26, 'Teh Hangat', 5000.00, 'Minuman hangat'),
+(38, 26, 'Siomay', 15000.00, 'Side dish'),
+(39, 27, 'Kentang Goreng', 18000.00, 'French fries'),
+(40, 27, 'Milkshake Strawberry', 22000.00, 'Milkshake strawberry');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `foto_booth`
+--
+
+CREATE TABLE `foto_booth` (
+  `id_foto` int(11) NOT NULL,
+  `id_umkm` int(11) NOT NULL,
+  `url_foto` varchar(255) NOT NULL,
+  `keterangan` varchar(255) DEFAULT NULL,
+  `urutan` int(11) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `foto_booth`
+--
+
+INSERT INTO `foto_booth` (`id_foto`, `id_umkm`, `url_foto`, `keterangan`, `urutan`) VALUES
+(1, 1, 'boothseblak1.jpg', 'Booth depan', 1),
+(2, 1, 'booth/seblak2.jpg', 'Area masak', 2),
+(3, 1, 'booth/seblak3.jpg', 'Menu display', 3),
+(4, 2, 'booth/kopi1.jpg', 'Coffee bar', 1),
+(5, 2, 'booth/kopi2.jpg', 'Tempat duduk', 2),
+(6, 3, 'booth/dimsum1.jpg', 'Booth utama', 1),
+(7, 3, 'booth/dimsum2.jpg', 'Dapur dimsum', 2),
+(8, 4, 'booth/burger1.jpg', 'Panggangan burger', 1),
+(9, 4, 'booth/burger2.jpg', 'Area order', 2),
+(10, 5, 'booth/martabak1.jpg', 'Booth malam hari', 1),
+(11, 6, 'booth/geprek1.jpg', 'Display sambal', 1),
+(12, 7, 'booth/sushi1.jpg', 'Booth sushi', 1),
+(13, 8, 'booth/bakso1.jpg', 'Tempat makan', 1),
+(14, 9, 'booth/thai1.jpg', 'Booth thai tea', 1),
+(15, 10, 'booth/roti1.jpg', 'Booth roti bakar', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jadwal`
+--
+
+CREATE TABLE `jadwal` (
+  `id_jadwal` int(11) NOT NULL,
+  `id_umkm` int(11) NOT NULL,
+  `hari` enum('Senin','Selasa','Rabu','Kamis','Jumat','Sabtu','Minggu') NOT NULL,
+  `jam_buka` time NOT NULL,
+  `jam_tutup` time NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `jadwal`
+--
+
+INSERT INTO `jadwal` (`id_jadwal`, `id_umkm`, `hari`, `jam_buka`, `jam_tutup`) VALUES
+(191, 1, 'Senin', '10:00:00', '21:00:00'),
+(192, 1, 'Selasa', '10:00:00', '21:00:00'),
+(193, 1, 'Rabu', '10:00:00', '21:00:00'),
+(194, 1, 'Kamis', '10:00:00', '21:00:00'),
+(195, 1, 'Jumat', '13:00:00', '22:00:00'),
+(196, 1, 'Sabtu', '09:00:00', '22:00:00'),
+(197, 1, 'Minggu', '09:00:00', '20:00:00'),
+(198, 2, 'Selasa', '14:00:00', '22:00:00'),
+(199, 2, 'Rabu', '14:00:00', '22:00:00'),
+(200, 2, 'Kamis', '14:00:00', '22:00:00'),
+(201, 2, 'Jumat', '14:00:00', '23:00:00'),
+(202, 2, 'Sabtu', '10:00:00', '23:00:00'),
+(203, 2, 'Minggu', '10:00:00', '21:00:00'),
+(204, 3, 'Senin', '06:00:00', '10:00:00'),
+(205, 3, 'Selasa', '06:00:00', '10:00:00'),
+(206, 3, 'Rabu', '06:00:00', '10:00:00'),
+(207, 3, 'Kamis', '06:00:00', '10:00:00'),
+(208, 3, 'Jumat', '06:00:00', '09:30:00'),
+(209, 3, 'Sabtu', '06:00:00', '11:00:00'),
+(210, 4, 'Senin', '17:00:00', '23:00:00'),
+(211, 4, 'Selasa', '17:00:00', '23:00:00'),
+(212, 4, 'Rabu', '17:00:00', '23:00:00'),
+(213, 4, 'Kamis', '17:00:00', '23:00:00'),
+(214, 4, 'Jumat', '19:00:00', '23:59:00'),
+(215, 4, 'Sabtu', '17:00:00', '23:59:00'),
+(216, 4, 'Minggu', '17:00:00', '22:00:00'),
+(217, 5, 'Senin', '09:00:00', '20:00:00'),
+(218, 5, 'Selasa', '09:00:00', '20:00:00'),
+(219, 5, 'Rabu', '09:00:00', '20:00:00'),
+(220, 5, 'Kamis', '09:00:00', '20:00:00'),
+(221, 5, 'Jumat', '09:00:00', '21:00:00'),
+(222, 5, 'Sabtu', '10:00:00', '21:00:00'),
+(223, 6, 'Senin', '16:00:00', '23:00:00'),
+(224, 6, 'Selasa', '16:00:00', '23:00:00'),
+(225, 6, 'Rabu', '16:00:00', '23:00:00'),
+(226, 6, 'Kamis', '16:00:00', '23:00:00'),
+(227, 6, 'Jumat', '16:00:00', '23:59:00'),
+(228, 6, 'Sabtu', '16:00:00', '23:59:00'),
+(229, 7, 'Senin', '05:30:00', '10:00:00'),
+(230, 7, 'Selasa', '05:30:00', '10:00:00'),
+(231, 7, 'Rabu', '05:30:00', '10:00:00'),
+(232, 7, 'Kamis', '05:30:00', '10:00:00'),
+(233, 7, 'Jumat', '05:30:00', '09:00:00'),
+(234, 8, 'Senin', '11:00:00', '20:00:00'),
+(235, 8, 'Selasa', '11:00:00', '20:00:00'),
+(236, 8, 'Rabu', '11:00:00', '20:00:00'),
+(237, 8, 'Kamis', '11:00:00', '20:00:00'),
+(238, 8, 'Sabtu', '11:00:00', '21:00:00'),
+(239, 8, 'Minggu', '11:00:00', '21:00:00'),
+(240, 9, 'Selasa', '17:00:00', '23:00:00'),
+(241, 9, 'Rabu', '17:00:00', '23:00:00'),
+(242, 9, 'Kamis', '17:00:00', '23:00:00'),
+(243, 9, 'Jumat', '17:00:00', '23:59:00'),
+(244, 9, 'Sabtu', '17:00:00', '23:59:00'),
+(245, 9, 'Minggu', '17:00:00', '22:00:00'),
+(246, 10, 'Senin', '09:00:00', '18:00:00'),
+(247, 10, 'Selasa', '09:00:00', '18:00:00'),
+(248, 10, 'Rabu', '09:00:00', '18:00:00'),
+(249, 10, 'Kamis', '09:00:00', '18:00:00'),
+(250, 10, 'Jumat', '09:00:00', '18:00:00'),
+(251, 10, 'Sabtu', '10:00:00', '19:00:00'),
+(252, 11, 'Senin', '10:00:00', '21:00:00'),
+(253, 11, 'Selasa', '10:00:00', '21:00:00'),
+(254, 11, 'Rabu', '10:00:00', '21:00:00'),
+(255, 11, 'Kamis', '10:00:00', '21:00:00'),
+(256, 11, 'Jumat', '13:00:00', '22:00:00'),
+(257, 11, 'Sabtu', '10:00:00', '22:00:00'),
+(258, 11, 'Minggu', '10:00:00', '20:00:00'),
+(259, 12, 'Selasa', '15:00:00', '23:00:00'),
+(260, 12, 'Rabu', '15:00:00', '23:00:00'),
+(261, 12, 'Kamis', '15:00:00', '23:00:00'),
+(262, 12, 'Jumat', '15:00:00', '23:59:00'),
+(263, 12, 'Sabtu', '15:00:00', '23:59:00'),
+(264, 12, 'Minggu', '15:00:00', '22:00:00'),
+(265, 13, 'Senin', '17:00:00', '22:00:00'),
+(266, 13, 'Selasa', '17:00:00', '22:00:00'),
+(267, 13, 'Rabu', '17:00:00', '22:00:00'),
+(268, 13, 'Kamis', '17:00:00', '22:00:00'),
+(269, 13, 'Sabtu', '17:00:00', '23:00:00'),
+(270, 14, 'Senin', '08:00:00', '17:00:00'),
+(271, 14, 'Selasa', '08:00:00', '17:00:00'),
+(272, 14, 'Rabu', '08:00:00', '17:00:00'),
+(273, 14, 'Kamis', '08:00:00', '17:00:00'),
+(274, 14, 'Jumat', '08:00:00', '17:00:00'),
+(275, 14, 'Sabtu', '09:00:00', '18:00:00'),
+(276, 15, 'Senin', '11:00:00', '21:00:00'),
+(277, 15, 'Selasa', '11:00:00', '21:00:00'),
+(278, 15, 'Rabu', '11:00:00', '21:00:00'),
+(279, 15, 'Kamis', '11:00:00', '21:00:00'),
+(280, 15, 'Jumat', '13:00:00', '22:00:00'),
+(281, 15, 'Sabtu', '11:00:00', '22:00:00'),
+(282, 15, 'Minggu', '11:00:00', '20:00:00'),
+(283, 16, 'Selasa', '13:00:00', '21:00:00'),
+(284, 16, 'Rabu', '13:00:00', '21:00:00'),
+(285, 16, 'Kamis', '13:00:00', '21:00:00'),
+(286, 16, 'Jumat', '13:00:00', '22:00:00'),
+(287, 16, 'Sabtu', '12:00:00', '22:00:00'),
+(288, 17, 'Senin', '12:00:00', '21:00:00'),
+(289, 17, 'Selasa', '12:00:00', '21:00:00'),
+(290, 17, 'Rabu', '12:00:00', '21:00:00'),
+(291, 17, 'Kamis', '12:00:00', '21:00:00'),
+(292, 17, 'Jumat', '13:00:00', '22:00:00'),
+(293, 17, 'Sabtu', '12:00:00', '22:00:00'),
+(294, 18, 'Senin', '10:00:00', '20:00:00'),
+(295, 18, 'Selasa', '10:00:00', '20:00:00'),
+(296, 18, 'Rabu', '10:00:00', '20:00:00'),
+(297, 18, 'Kamis', '10:00:00', '20:00:00'),
+(298, 18, 'Jumat', '10:00:00', '21:00:00'),
+(299, 18, 'Sabtu', '10:00:00', '21:00:00'),
+(300, 18, 'Minggu', '10:00:00', '19:00:00'),
+(301, 19, 'Selasa', '15:00:00', '23:00:00'),
+(302, 19, 'Rabu', '15:00:00', '23:00:00'),
+(303, 19, 'Kamis', '15:00:00', '23:00:00'),
+(304, 19, 'Jumat', '15:00:00', '23:59:00'),
+(305, 19, 'Sabtu', '15:00:00', '23:59:00'),
+(306, 19, 'Minggu', '15:00:00', '22:00:00'),
+(307, 20, 'Senin', '09:00:00', '19:00:00'),
+(308, 20, 'Selasa', '09:00:00', '19:00:00'),
+(309, 20, 'Rabu', '09:00:00', '19:00:00'),
+(310, 20, 'Kamis', '09:00:00', '19:00:00'),
+(311, 20, 'Sabtu', '09:00:00', '20:00:00'),
+(312, 21, 'Senin', '16:00:00', '23:00:00'),
+(313, 21, 'Selasa', '16:00:00', '23:00:00'),
+(314, 21, 'Rabu', '16:00:00', '23:00:00'),
+(315, 21, 'Kamis', '16:00:00', '23:00:00'),
+(316, 21, 'Jumat', '16:00:00', '23:59:00'),
+(317, 21, 'Sabtu', '16:00:00', '23:59:00'),
+(318, 22, 'Selasa', '11:00:00', '20:00:00'),
+(319, 22, 'Rabu', '11:00:00', '20:00:00'),
+(320, 22, 'Kamis', '11:00:00', '20:00:00'),
+(321, 22, 'Jumat', '11:00:00', '21:00:00'),
+(322, 22, 'Sabtu', '11:00:00', '21:00:00'),
+(323, 22, 'Minggu', '11:00:00', '20:00:00'),
+(324, 23, 'Senin', '07:00:00', '14:00:00'),
+(325, 23, 'Selasa', '07:00:00', '14:00:00'),
+(326, 23, 'Rabu', '07:00:00', '14:00:00'),
+(327, 23, 'Kamis', '07:00:00', '14:00:00'),
+(328, 23, 'Jumat', '07:00:00', '13:00:00'),
+(329, 24, 'Senin', '12:00:00', '22:00:00'),
+(330, 24, 'Selasa', '12:00:00', '22:00:00'),
+(331, 24, 'Rabu', '12:00:00', '22:00:00'),
+(332, 24, 'Kamis', '12:00:00', '22:00:00'),
+(333, 24, 'Jumat', '13:00:00', '23:00:00'),
+(334, 24, 'Sabtu', '12:00:00', '23:00:00'),
+(335, 24, 'Minggu', '12:00:00', '21:00:00'),
+(336, 25, 'Selasa', '11:00:00', '21:00:00'),
+(337, 25, 'Rabu', '11:00:00', '21:00:00'),
+(338, 25, 'Kamis', '11:00:00', '21:00:00'),
+(339, 25, 'Jumat', '13:00:00', '22:00:00'),
+(340, 25, 'Sabtu', '11:00:00', '22:00:00'),
+(341, 26, 'Senin', '10:00:00', '20:00:00'),
+(342, 26, 'Selasa', '10:00:00', '20:00:00'),
+(343, 26, 'Rabu', '10:00:00', '20:00:00'),
+(344, 26, 'Kamis', '10:00:00', '20:00:00'),
+(345, 26, 'Jumat', '10:00:00', '21:00:00'),
+(346, 26, 'Sabtu', '10:00:00', '21:00:00'),
+(347, 27, 'Selasa', '13:00:00', '22:00:00'),
+(348, 27, 'Rabu', '13:00:00', '22:00:00'),
+(349, 27, 'Kamis', '13:00:00', '22:00:00'),
+(350, 27, 'Jumat', '13:00:00', '23:00:00'),
+(351, 27, 'Sabtu', '10:00:00', '23:00:00'),
+(352, 27, 'Minggu', '10:00:00', '21:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `kategori`
+--
+
+CREATE TABLE `kategori` (
+  `id_kategori` int(11) NOT NULL,
+  `jenis_kategori` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `kategori`
+--
+
+INSERT INTO `kategori` (`id_kategori`, `jenis_kategori`) VALUES
+(1, 'Makanan Berat'),
+(2, 'Minuman'),
+(3, 'Jajanan & Cemilan'),
+(4, 'Seafood'),
+(5, 'Dessert'),
+(6, 'Korean Food'),
+(7, 'Japanese Food'),
+(8, 'Coffee'),
+(9, 'Bakery'),
+(10, 'Healthy Food');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `kategori_rasa`
+--
+
+CREATE TABLE `kategori_rasa` (
+  `id_rasa` int(11) NOT NULL,
+  `nama_rasa` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `kategori_rasa`
+--
+
+INSERT INTO `kategori_rasa` (`id_rasa`, `nama_rasa`) VALUES
+(1, 'Gurih'),
+(2, 'Manis'),
+(3, 'Pedas'),
+(4, 'Asam'),
+(5, 'Berkuah'),
+(6, 'Asin'),
+(7, 'Segar'),
+(8, 'Creamy'),
+(9, 'Smokey'),
+(10, 'Keju'),
+(11, 'Coklat'),
+(12, 'Matcha'),
+(13, 'BBQ');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `lokasi`
+--
+
+CREATE TABLE `lokasi` (
+  `id_lokasi` int(11) NOT NULL,
+  `koordinat` varchar(100) NOT NULL,
+  `deskripsi` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `lokasi`
+--
+
+INSERT INTO `lokasi` (`id_lokasi`, `koordinat`, `deskripsi`) VALUES
+(1, '-6.914744,107.609810', 'Dekat pintu masuk utama'),
+(2, '-6.914850,107.610200', 'Sebelah area parkir'),
+(3, '-6.915100,107.610500', 'Dekat taman tengah'),
+(4, '-6.915300,107.610700', 'Area food court belakang'),
+(5, '-6.915500,107.611000', 'Dekat panggung acara'),
+(6, '-6.915700,107.611200', 'Samping toilet umum'),
+(7, '-6.915900,107.611400', 'Dekat area duduk'),
+(8, '-6.916100,107.611600', 'Area kuliner timur'),
+(9, '-6.916300,107.611800', 'Area kuliner barat'),
+(10, '-6.916500,107.612000', 'Dekat pintu keluar');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `menu`
+--
+
+CREATE TABLE `menu` (
+  `id_menu` int(11) NOT NULL,
+  `nama_menu` varchar(100) NOT NULL,
+  `harga_menu` decimal(10,2) NOT NULL,
+  `satuan` varchar(50) DEFAULT NULL,
+  `foto_menu` varchar(255) DEFAULT NULL,
+  `id_umkm` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `menu`
+--
+
+INSERT INTO `menu` (`id_menu`, `nama_menu`, `harga_menu`, `satuan`, `foto_menu`, `id_umkm`) VALUES
+(1, 'Seblak Original', 15000.00, 'porsi', 'seblak_original.jpg', 1),
+(2, 'Seblak Ceker', 20000.00, 'porsi', 'seblak_ceker.jpg', 1),
+(3, 'Seblak Seafood', 25000.00, 'porsi', 'seblak_seafood.jpg', 1),
+(4, 'Es Kopi Susu Gula Aren', 18000.00, 'gelas', 'kopi_aren.jpg', 2),
+(5, 'Matcha Latte', 22000.00, 'gelas', 'matcha.jpg', 2),
+(6, 'Americano', 15000.00, 'gelas', 'americano.jpg', 2),
+(7, 'Dimsum Ayam', 25000.00, 'porsi', 'dimsum_ayam.jpg', 3),
+(8, 'Dimsum Mentai', 30000.00, 'porsi', 'dimsum_mentai.jpg', 3),
+(9, 'Hakau Udang', 32000.00, 'porsi', 'hakau.jpg', 3),
+(10, 'Cheese Burger', 28000.00, 'pcs', 'cheese_burger.jpg', 4),
+(11, 'Double Smoke Burger', 42000.00, 'pcs', 'double_burger.jpg', 4),
+(12, 'Martabak Coklat Keju', 45000.00, 'pcs', 'martabak_ck.jpg', 5),
+(13, 'Martabak Red Velvet', 50000.00, 'pcs', 'martabak_rv.jpg', 5),
+(14, 'Ayam Geprek Level 3', 18000.00, 'porsi', 'geprek_lv3.jpg', 6),
+(15, 'Ayam Geprek Mozzarella', 25000.00, 'porsi', 'geprek_mozza.jpg', 6),
+(16, 'Salmon Sushi', 40000.00, 'porsi', 'salmon_sushi.jpg', 7),
+(17, 'Mentai Rice', 35000.00, 'bowl', 'mentai_rice.jpg', 7),
+(18, 'Bakso Lava', 22000.00, 'mangkok', 'bakso_lava.jpg', 8),
+(19, 'Bakso Urat Jumbo', 27000.00, 'mangkok', 'bakso_urat.jpg', 8),
+(20, 'Thai Tea Original', 15000.00, 'gelas', 'thai_original.jpg', 9),
+(21, 'Green Thai Tea', 18000.00, 'gelas', 'green_thai.jpg', 9),
+(22, 'Roti Bakar Nutella', 26000.00, 'pcs', 'roti_nutella.jpg', 10),
+(23, 'Roti Bakar Ovomaltine', 32000.00, 'pcs', 'roti_ovomaltine.jpg', 10),
+(24, 'Beef Taco', 35000.00, 'porsi', 'beef_taco.jpg', 11),
+(25, 'Chicken Burrito', 38000.00, 'porsi', 'burrito.jpg', 11),
+(26, 'Chicken Salad Bowl', 30000.00, 'bowl', 'salad.jpg', 12),
+(27, 'Fruit Yogurt Bowl', 28000.00, 'bowl', 'fruit_bowl.jpg', 12),
+(28, 'Nasi Goreng Original', 18000.00, 'porsi', 'nasgor_ori.jpg', 13),
+(29, 'Nasi Goreng Gila', 25000.00, 'porsi', 'nasgor_gila.jpg', 13),
+(30, 'Nasi Goreng Seafood', 30000.00, 'porsi', 'nasgor_seafood.jpg', 13),
+(31, 'Nasi Goreng Mawut', 23000.00, 'porsi', 'nasgor_mawut.jpg', 13),
+(32, 'Nasi Goreng Sosis', 22000.00, 'porsi', 'nasgor_sosis.jpg', 13),
+(33, 'Nasi Goreng Rendang', 32000.00, 'porsi', 'nasgor_rendang.jpg', 13),
+(34, 'Nasi Goreng Kambing', 35000.00, 'porsi', 'nasgor_kambing.jpg', 13),
+(35, 'Sate Taichan Original', 22000.00, 'porsi', 'taichan_ori.jpg', 14),
+(36, 'Sate Taichan Keju', 28000.00, 'porsi', 'taichan_keju.jpg', 14),
+(37, 'Taichan Kulit', 20000.00, 'porsi', 'taichan_kulit.jpg', 14),
+(38, 'Taichan Mozzarella', 32000.00, 'porsi', 'taichan_mozza.jpg', 14),
+(39, 'Taichan Rice Bowl', 26000.00, 'bowl', 'taichan_rice.jpg', 14),
+(40, 'Taichan Sambal Ijo', 25000.00, 'porsi', 'taichan_ijo.jpg', 14),
+(41, 'Kebab Beef', 20000.00, 'pcs', 'kebab_beef.jpg', 15),
+(42, 'Kebab Chicken', 18000.00, 'pcs', 'kebab_chicken.jpg', 15),
+(43, 'Kebab Jumbo', 30000.00, 'pcs', 'kebab_jumbo.jpg', 15),
+(44, 'Kebab Mozzarella', 28000.00, 'pcs', 'kebab_mozza.jpg', 15),
+(45, 'Burger Kebab', 32000.00, 'pcs', 'burger_kebab.jpg', 15),
+(46, 'Kebab Blackpaper', 26000.00, 'pcs', 'kebab_black.jpg', 15),
+(47, 'Tahu Crispy Balado', 12000.00, 'porsi', 'tahu_balado.jpg', 16),
+(48, 'Tahu Crispy BBQ', 12000.00, 'porsi', 'tahu_bbq.jpg', 16),
+(49, 'Tahu Crispy Keju', 14000.00, 'porsi', 'tahu_keju.jpg', 16),
+(50, 'Tahu Crispy Pedas', 12000.00, 'porsi', 'tahu_pedas.jpg', 16),
+(51, 'Tahu Crispy Jagung Bakar', 14000.00, 'porsi', 'tahu_jagung.jpg', 16),
+(52, 'Mix Crispy Combo', 18000.00, 'porsi', 'mix_crispy.jpg', 16),
+(53, 'Mochi Matcha', 18000.00, 'box', 'mochi_matcha.jpg', 17),
+(54, 'Mochi Vanilla', 18000.00, 'box', 'mochi_vanilla.jpg', 17),
+(55, 'Mochi Chocolate', 18000.00, 'box', 'mochi_choco.jpg', 17),
+(56, 'Mochi Strawberry', 18000.00, 'box', 'mochi_strawberry.jpg', 17),
+(57, 'Mochi Tiramisu', 22000.00, 'box', 'mochi_tiramisu.jpg', 17),
+(58, 'Mochi Mix Flavor', 25000.00, 'box', 'mochi_mix.jpg', 17),
+(59, 'Kerang Saus Padang', 35000.00, 'porsi', 'kerang_padang.jpg', 18),
+(60, 'Udang BBQ', 42000.00, 'porsi', 'udang_bbq.jpg', 18),
+(61, 'Cumi Asam Manis', 40000.00, 'porsi', 'cumi_asam.jpg', 18),
+(62, 'Kepiting Saus Tiram', 65000.00, 'porsi', 'kepiting.jpg', 18),
+(63, 'Lobster Bakar', 120000.00, 'porsi', 'lobster.jpg', 18),
+(64, 'Paket Seafood Mix', 85000.00, 'porsi', 'seafood_mix.jpg', 18),
+(65, 'Chicken Katsu Original', 28000.00, 'porsi', 'katsu_ori.jpg', 19),
+(66, 'Chicken Katsu Curry', 35000.00, 'porsi', 'katsu_curry.jpg', 19),
+(67, 'Chicken Katsu Mentai', 38000.00, 'porsi', 'katsu_mentai.jpg', 19),
+(68, 'Beef Katsu', 42000.00, 'porsi', 'beef_katsu.jpg', 19),
+(69, 'Katsu Rice Bowl', 30000.00, 'bowl', 'katsu_rice.jpg', 19),
+(70, 'Spicy Katsu', 32000.00, 'porsi', 'spicy_katsu.jpg', 19),
+(71, 'Pisang Nugget Coklat', 18000.00, 'box', 'pisang_coklat.jpg', 20),
+(72, 'Pisang Nugget Tiramisu', 22000.00, 'box', 'pisang_tiramisu.jpg', 20),
+(73, 'Pisang Nugget Matcha', 22000.00, 'box', 'pisang_matcha.jpg', 20),
+(74, 'Pisang Nugget Oreo', 20000.00, 'box', 'pisang_oreo.jpg', 20),
+(75, 'Pisang Nugget Keju', 20000.00, 'box', 'pisang_keju.jpg', 20),
+(76, 'Pisang Nugget Mix', 28000.00, 'box', 'pisang_mix.jpg', 20),
+(77, 'Es Teh Original', 8000.00, 'gelas', 'esteh_ori.jpg', 21),
+(78, 'Es Teh Lemon', 12000.00, 'gelas', 'esteh_lemon.jpg', 21),
+(79, 'Es Teh Lychee', 15000.00, 'gelas', 'esteh_lychee.jpg', 21),
+(80, 'Es Teh Strawberry', 15000.00, 'gelas', 'esteh_strawberry.jpg', 21),
+(81, 'Es Teh Jumbo', 18000.00, 'gelas', 'esteh_jumbo.jpg', 21),
+(82, 'Thai Tea Brown Sugar', 18000.00, 'gelas', 'thai_brown.jpg', 21),
+(83, 'Donat Gula Halus', 10000.00, 'pcs', 'donat_gula.jpg', 22),
+(84, 'Donat Tiramisu', 15000.00, 'pcs', 'donat_tiramisu.jpg', 22),
+(85, 'Donat Matcha', 15000.00, 'pcs', 'donat_matcha.jpg', 22),
+(86, 'Donat Red Velvet', 18000.00, 'pcs', 'donat_rv.jpg', 22),
+(87, 'Bomboloni Vanilla', 18000.00, 'pcs', 'bomboloni.jpg', 22),
+(88, 'Donat Box Mix', 60000.00, 'box', 'donat_mix.jpg', 22),
+(89, 'Beef Teriyaki Bowl', 32000.00, 'bowl', 'beef_teri.jpg', 23),
+(90, 'Chicken Salted Egg Bowl', 30000.00, 'bowl', 'salted_egg.jpg', 23),
+(91, 'Chicken Blackpepper Bowl', 30000.00, 'bowl', 'blackpepper.jpg', 23),
+(92, 'Chicken Mentai Bowl', 35000.00, 'bowl', 'mentai_bowl.jpg', 23),
+(93, 'Spicy Beef Bowl', 36000.00, 'bowl', 'spicy_beef.jpg', 23),
+(94, 'Karaage Bowl', 32000.00, 'bowl', 'karaage.jpg', 23),
+(95, 'Makaroni Level 1', 10000.00, 'porsi', 'makaroni1.jpg', 24),
+(96, 'Makaroni Level 3', 12000.00, 'porsi', 'makaroni3.jpg', 24),
+(97, 'Makaroni Level 5', 15000.00, 'porsi', 'makaroni5.jpg', 24),
+(98, 'Makaroni BBQ', 12000.00, 'porsi', 'makaroni_bbq.jpg', 24),
+(99, 'Makaroni Jagung Bakar', 12000.00, 'porsi', 'makaroni_jagung.jpg', 24),
+(100, 'Makaroni Mix', 18000.00, 'porsi', 'makaroni_mix.jpg', 24),
+(101, 'Croffle Original', 18000.00, 'pcs', 'croffle_ori.jpg', 25),
+(102, 'Croffle Matcha', 24000.00, 'pcs', 'croffle_matcha.jpg', 25),
+(103, 'Croffle Chocolate', 24000.00, 'pcs', 'croffle_choco.jpg', 25),
+(104, 'Croffle Lotus', 26000.00, 'pcs', 'croffle_lotus.jpg', 25),
+(105, 'Croffle Cheese', 24000.00, 'pcs', 'croffle_cheese.jpg', 25),
+(106, 'Ice Cream Croffle', 30000.00, 'pcs', 'croffle_ice.jpg', 25),
+(107, 'Bakmie Ayam', 22000.00, 'mangkok', 'bakmie_ayam.jpg', 26),
+(108, 'Bakmie Charsiu', 35000.00, 'mangkok', 'bakmie_charsiu.jpg', 26),
+(109, 'Bakmie Pangsit', 28000.00, 'mangkok', 'bakmie_pangsit.jpg', 26),
+(110, 'Bakmie Seafood', 38000.00, 'mangkok', 'bakmie_seafood.jpg', 26),
+(111, 'Nasi Ayam Hainan', 35000.00, 'porsi', 'hainan.jpg', 26),
+(112, 'Kwetiau Siram', 32000.00, 'porsi', 'kwetiau.jpg', 26),
+(113, 'Sosis Jumbo BBQ', 18000.00, 'pcs', 'sosis_bbq.jpg', 27),
+(114, 'Sosis Mozzarella', 25000.00, 'pcs', 'sosis_mozza.jpg', 27),
+(115, 'Sosis Blackpaper', 22000.00, 'pcs', 'sosis_black.jpg', 27),
+(116, 'Mix Grill Sausage', 35000.00, 'porsi', 'mix_sosis.jpg', 27),
+(117, 'Sosis Pedas Gila', 20000.00, 'pcs', 'sosis_pedas.jpg', 27),
+(118, 'Hotdog Volcano', 28000.00, 'pcs', 'hotdog.jpg', 27),
+(119, 'Seblak Bakso', 18000.00, 'porsi', 'seblak_bakso.jpg', 1),
+(120, 'Seblak Sosis', 17000.00, 'porsi', 'seblak_sosis.jpg', 1),
+(121, 'Seblak Komplit', 28000.00, 'porsi', 'seblak_komplit.jpg', 1),
+(122, 'Seblak Tulang', 22000.00, 'porsi', 'seblak_tulang.jpg', 1),
+(123, 'Seblak Mie', 16000.00, 'porsi', 'seblak_mie.jpg', 1),
+(124, 'Seblak Cuanki', 24000.00, 'porsi', 'seblak_cuanki.jpg', 1),
+(125, 'Caramel Latte', 24000.00, 'gelas', 'caramel_latte.jpg', 2),
+(126, 'Hazelnut Latte', 25000.00, 'gelas', 'hazelnut.jpg', 2),
+(127, 'Chocolate Frappe', 26000.00, 'gelas', 'frappe.jpg', 2),
+(128, 'Avocado Coffee', 28000.00, 'gelas', 'avocado.jpg', 2),
+(129, 'Kopi Pandan', 22000.00, 'gelas', 'kopi_pandan.jpg', 2),
+(130, 'Brown Sugar Latte', 24000.00, 'gelas', 'brown_sugar.jpg', 2),
+(131, 'Dimsum Keju', 28000.00, 'porsi', 'dimsum_keju.jpg', 3),
+(132, 'Dimsum Crabstick', 30000.00, 'porsi', 'dimsum_crab.jpg', 3),
+(133, 'Dimsum Jamur', 27000.00, 'porsi', 'dimsum_jamur.jpg', 3),
+(134, 'Dimsum Mozzarella', 32000.00, 'porsi', 'dimsum_mozza.jpg', 3),
+(135, 'Paket Dimsum Mix', 45000.00, 'porsi', 'dimsum_mix.jpg', 3),
+(136, 'Dimsum Chili Oil', 30000.00, 'porsi', 'dimsum_chili.jpg', 3),
+(137, 'Smoked Beef Burger', 35000.00, 'pcs', 'smoked_beef.jpg', 4),
+(138, 'Burger Double Cheese', 40000.00, 'pcs', 'double_cheese.jpg', 4),
+(139, 'Burger BBQ', 36000.00, 'pcs', 'burger_bbq.jpg', 4),
+(140, 'Burger Spicy Jalapeno', 38000.00, 'pcs', 'burger_jalapeno.jpg', 4),
+(141, 'Chicken Burger', 30000.00, 'pcs', 'chicken_burger.jpg', 4),
+(142, 'Burger Monster', 55000.00, 'pcs', 'burger_monster.jpg', 4),
+(143, 'Martabak Oreo', 42000.00, 'pcs', 'martabak_oreo.jpg', 5),
+(144, 'Martabak Nutella', 55000.00, 'pcs', 'martabak_nutella.jpg', 5),
+(145, 'Martabak Toblerone', 60000.00, 'pcs', 'martabak_toblerone.jpg', 5),
+(146, 'Martabak Matcha', 50000.00, 'pcs', 'martabak_matcha.jpg', 5),
+(147, 'Martabak Skippy', 48000.00, 'pcs', 'martabak_skippy.jpg', 5),
+(148, 'Martabak Mix Premium', 70000.00, 'pcs', 'martabak_mix.jpg', 5),
+(149, 'Ayam Geprek Original', 16000.00, 'porsi', 'geprek_ori.jpg', 6),
+(150, 'Ayam Geprek Sambal Matah', 24000.00, 'porsi', 'geprek_matah.jpg', 6),
+(151, 'Ayam Geprek Keju', 22000.00, 'porsi', 'geprek_keju.jpg', 6),
+(152, 'Ayam Geprek Salted Egg', 28000.00, 'porsi', 'geprek_salted.jpg', 6),
+(153, 'Ayam Geprek Blackpepper', 26000.00, 'porsi', 'geprek_black.jpg', 6),
+(154, 'Paket Geprek Jumbo', 35000.00, 'porsi', 'geprek_jumbo.jpg', 6),
+(155, 'California Roll', 38000.00, 'porsi', 'california_roll.jpg', 7),
+(156, 'Dragon Roll', 45000.00, 'porsi', 'dragon_roll.jpg', 7),
+(157, 'Spicy Tuna Roll', 42000.00, 'porsi', 'tuna_roll.jpg', 7),
+(158, 'Ebi Tempura Roll', 44000.00, 'porsi', 'ebi_roll.jpg', 7),
+(159, 'Chicken Teriyaki Sushi', 36000.00, 'porsi', 'teriyaki_sushi.jpg', 7),
+(160, 'Sushi Mix Platter', 70000.00, 'porsi', 'sushi_mix.jpg', 7),
+(161, 'Bakso Mercon', 25000.00, 'mangkok', 'bakso_mercon.jpg', 8),
+(162, 'Bakso Mozzarella', 32000.00, 'mangkok', 'bakso_mozza.jpg', 8),
+(163, 'Bakso Kuah Pedas', 23000.00, 'mangkok', 'bakso_pedas.jpg', 8),
+(164, 'Bakso Tetelan', 28000.00, 'mangkok', 'bakso_tetelan.jpg', 8),
+(165, 'Bakso Komplit', 35000.00, 'mangkok', 'bakso_komplit.jpg', 8),
+(166, 'Bakso Urat Lava', 30000.00, 'mangkok', 'bakso_uratlava.jpg', 8),
+(167, 'Thai Green Tea', 17000.00, 'gelas', 'thai_green.jpg', 9),
+(168, 'Thai Coffee', 18000.00, 'gelas', 'thai_coffee.jpg', 9),
+(169, 'Thai Chocolate', 19000.00, 'gelas', 'thai_choco.jpg', 9),
+(170, 'Thai Red Velvet', 20000.00, 'gelas', 'thai_redvelvet.jpg', 9),
+(171, 'Thai Taro', 19000.00, 'gelas', 'thai_taro.jpg', 9),
+(172, 'Thai Mix Boba', 24000.00, 'gelas', 'thai_boba.jpg', 9),
+(173, 'Roti Bakar Keju', 22000.00, 'pcs', 'roti_keju.jpg', 10),
+(174, 'Roti Bakar Coklat', 22000.00, 'pcs', 'roti_coklat.jpg', 10),
+(175, 'Roti Bakar Srikaya', 24000.00, 'pcs', 'roti_srikaya.jpg', 10),
+(176, 'Roti Bakar Tiramisu', 26000.00, 'pcs', 'roti_tiramisu.jpg', 10),
+(177, 'Roti Bakar Matcha', 26000.00, 'pcs', 'roti_matcha.jpg', 10),
+(178, 'Roti Bakar Premium Mix', 38000.00, 'pcs', 'roti_mix.jpg', 10),
+(179, 'Chicken Taco', 32000.00, 'porsi', 'chicken_taco.jpg', 11),
+(180, 'Cheese Taco', 34000.00, 'porsi', 'cheese_taco.jpg', 11),
+(181, 'Spicy Beef Taco', 38000.00, 'porsi', 'spicy_taco.jpg', 11),
+(182, 'Nachos Beef', 35000.00, 'porsi', 'nachos.jpg', 11),
+(183, 'Burrito Jumbo', 45000.00, 'porsi', 'burrito_jumbo.jpg', 11),
+(184, 'Quesadilla', 40000.00, 'porsi', 'quesadilla.jpg', 11),
+(185, 'Salmon Salad Bowl', 48000.00, 'bowl', 'salmon_salad.jpg', 12),
+(186, 'Tuna Salad Bowl', 42000.00, 'bowl', 'tuna_salad.jpg', 12),
+(187, 'Granola Yogurt Bowl', 30000.00, 'bowl', 'granola.jpg', 12),
+(188, 'Avocado Toast', 35000.00, 'pcs', 'avocado_toast.jpg', 12),
+(189, 'Protein Chicken Bowl', 42000.00, 'bowl', 'protein_bowl.jpg', 12),
+(190, 'Healthy Fruit Mix', 28000.00, 'bowl', 'fruit_mix.jpg', 12);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `menu_rasa`
+--
+
+CREATE TABLE `menu_rasa` (
+  `id_menu` int(11) NOT NULL,
+  `id_rasa` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `menu_rasa`
+--
+
+INSERT INTO `menu_rasa` (`id_menu`, `id_rasa`) VALUES
+(1, 1),
+(1, 3),
+(1, 6),
+(2, 1),
+(2, 3),
+(3, 3),
+(3, 9),
+(4, 2),
+(4, 8),
+(5, 8),
+(5, 12),
+(6, 1),
+(7, 1),
+(8, 8),
+(9, 1),
+(9, 4),
+(10, 1),
+(10, 13),
+(11, 9),
+(12, 2),
+(12, 11),
+(13, 2),
+(13, 10),
+(14, 1),
+(14, 3),
+(15, 3),
+(15, 10),
+(16, 1),
+(17, 8),
+(18, 1),
+(18, 3),
+(19, 1),
+(19, 4),
+(20, 2),
+(20, 8),
+(21, 12),
+(22, 2),
+(22, 10),
+(23, 11),
+(24, 13),
+(25, 1),
+(26, 2),
+(27, 1),
+(27, 3),
+(28, 1),
+(28, 3),
+(29, 1),
+(29, 4),
+(30, 1),
+(31, 1),
+(31, 13),
+(32, 1),
+(32, 9),
+(33, 1),
+(33, 4),
+(34, 3),
+(35, 3),
+(35, 10),
+(36, 1),
+(37, 3),
+(37, 10),
+(38, 1),
+(38, 3),
+(39, 3),
+(39, 4),
+(40, 1),
+(41, 1),
+(42, 1),
+(42, 10),
+(43, 1),
+(44, 1),
+(44, 10),
+(45, 13),
+(46, 3),
+(47, 13),
+(48, 10),
+(49, 3),
+(50, 13),
+(51, 1),
+(52, 12),
+(53, 2),
+(54, 11),
+(55, 2),
+(56, 8),
+(57, 2),
+(58, 3),
+(59, 13),
+(60, 4),
+(61, 1),
+(62, 9),
+(63, 3),
+(63, 13),
+(64, 1),
+(65, 8),
+(66, 8),
+(67, 1),
+(68, 3),
+(69, 1),
+(69, 3),
+(70, 11),
+(71, 8),
+(72, 12),
+(73, 2),
+(74, 10),
+(75, 2),
+(75, 11),
+(76, 2),
+(77, 5),
+(78, 2),
+(79, 2),
+(80, 2),
+(81, 8),
+(82, 2),
+(83, 8),
+(84, 12),
+(85, 2),
+(86, 8),
+(87, 2),
+(87, 11),
+(88, 1),
+(89, 8),
+(90, 13),
+(91, 8),
+(92, 3),
+(93, 1),
+(94, 3),
+(95, 3),
+(96, 13),
+(97, 13),
+(98, 1),
+(99, 1),
+(99, 3),
+(100, 2),
+(101, 12),
+(102, 11),
+(103, 8),
+(104, 10),
+(105, 2),
+(106, 1),
+(107, 1),
+(108, 1),
+(108, 4),
+(109, 4),
+(110, 4),
+(111, 1),
+(112, 13),
+(113, 13),
+(114, 4),
+(115, 13),
+(116, 3),
+(117, 13),
+(118, 1),
+(118, 3),
+(119, 3),
+(120, 1),
+(120, 3),
+(121, 3),
+(121, 4),
+(122, 3),
+(123, 1),
+(123, 3),
+(124, 2),
+(125, 2),
+(126, 11),
+(127, 8),
+(128, 1),
+(129, 2),
+(130, 10),
+(131, 1),
+(132, 1),
+(133, 10),
+(134, 1),
+(135, 3),
+(136, 9),
+(137, 10),
+(138, 13),
+(139, 3),
+(140, 1),
+(141, 1),
+(141, 3),
+(142, 11),
+(143, 11),
+(144, 11),
+(145, 12),
+(146, 2),
+(147, 2),
+(147, 11),
+(148, 3),
+(149, 3),
+(150, 10),
+(151, 8),
+(152, 13),
+(153, 1),
+(153, 3),
+(154, 1),
+(155, 1),
+(156, 3),
+(157, 1),
+(158, 2),
+(159, 1),
+(160, 3),
+(161, 10),
+(162, 3),
+(163, 1),
+(164, 1),
+(164, 3),
+(165, 3),
+(165, 4),
+(166, 12),
+(167, 2),
+(168, 11),
+(169, 2),
+(170, 8),
+(171, 2),
+(172, 10),
+(173, 11),
+(174, 2),
+(175, 8),
+(176, 12),
+(177, 2),
+(177, 11),
+(178, 1),
+(179, 10),
+(180, 3),
+(181, 13),
+(182, 3),
+(183, 1),
+(184, 1),
+(185, 1),
+(186, 2),
+(187, 8),
+(188, 1),
+(189, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `metode_pembayaran`
+--
+
+CREATE TABLE `metode_pembayaran` (
+  `id_metode` int(11) NOT NULL,
+  `metode_pembayaran` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `metode_pembayaran`
+--
+
+INSERT INTO `metode_pembayaran` (`id_metode`, `metode_pembayaran`) VALUES
+(1, 'Cash'),
+(2, 'QRIS'),
+(3, 'Transfer Bank'),
+(4, 'GoPay'),
+(5, 'OVO'),
+(6, 'Debit'),
+(7, 'DANA'),
+(8, 'ShopeePay');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `mitra`
+--
+
+CREATE TABLE `mitra` (
+  `id_mitra` int(11) NOT NULL,
+  `nama_mitra` varchar(100) NOT NULL,
+  `jenis_mitra` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `mitra`
+--
+
+INSERT INTO `mitra` (`id_mitra`, `nama_mitra`, `jenis_mitra`) VALUES
+(1, 'GoFood', 'Delivery Online'),
+(2, 'GrabFood', 'Delivery Online'),
+(3, 'ShopeeFood', 'Delivery Online');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `umkm`
+--
+
+CREATE TABLE `umkm` (
+  `id_umkm` int(11) NOT NULL,
+  `nama_stand` varchar(100) NOT NULL,
+  `nama_pemilik` varchar(100) NOT NULL,
+  `foto` varchar(255) DEFAULT NULL,
+  `deskripsi` text DEFAULT NULL,
+  `status_halal` enum('Sertifikasi Halal','Halal Belum Sertifikasi','Non-Halal') NOT NULL,
+  `id_kategori` int(11) DEFAULT NULL,
+  `id_lokasi` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `umkm`
+--
+
+INSERT INTO `umkm` (`id_umkm`, `nama_stand`, `nama_pemilik`, `foto`, `deskripsi`, `status_halal`, `id_kategori`, `id_lokasi`) VALUES
+(1, 'Seblak Jeletot Neng Sari', 'Sari Wulandari', 'seblak1.jpg', 'Seblak super pedas dengan topping melimpah.', 'Halal Belum Sertifikasi', 1, 1),
+(2, 'Kopi Senja Rasa', 'Fajar Nugraha', 'kopi1.jpg', 'Coffee dan non coffee kekinian.', 'Sertifikasi Halal', 8, 2),
+(3, 'Dimsum Sultan', 'Kevin Halim', 'dimsum1.jpg', 'Dimsum homemade premium.', 'Non-Halal', 6, 3),
+(4, 'Burger Smoke House', 'Andika Pratama', 'burger1.jpg', 'Burger juicy dengan smoked beef.', 'Halal Belum Sertifikasi', 1, 4),
+(5, 'Martabak Volcano', 'Lina Marlina', 'martabak1.jpg', 'Martabak manis topping full melimpah.', 'Sertifikasi Halal', 5, 5),
+(6, 'Ayam Geprek Gacor', 'Dimas Saputra', 'geprek1.jpg', 'Ayam geprek level pedas bebas pilih.', 'Sertifikasi Halal', 1, 6),
+(7, 'Sushi Yatta', 'Riko Tanaka', 'sushi1.jpg', 'Sushi dan mentai rice modern.', 'Non-Halal', 7, 7),
+(8, 'Bakso Lava', 'Yusuf Ramadhan', 'bakso1.jpg', 'Bakso isi sambal pedas.', 'Halal Belum Sertifikasi', 1, 8),
+(9, 'Thai Tea Bangkok', 'Nadia Putri', 'thai1.jpg', 'Thai tea creamy berbagai rasa.', 'Sertifikasi Halal', 2, 9),
+(10, 'Roti Bakar Galaxy', 'Miko Adrian', 'roti1.jpg', 'Roti bakar premium aneka topping.', 'Halal Belum Sertifikasi', 9, 10),
+(11, 'Taco Mexicana', 'Rafael Gomez', 'taco1.jpg', 'Taco dan burrito autentik.', 'Non-Halal', 3, 2),
+(12, 'Healthy Bowl Fit', 'Clara Angelica', 'healthy1.jpg', 'Salad dan healthy bowl segar.', 'Sertifikasi Halal', 10, 3),
+(13, 'Nasi Goreng Gila Bang Adit', 'Adit Prakoso', 'nasgor_adit.jpg', 'Nasi goreng jumbo dengan topping melimpah.', 'Halal Belum Sertifikasi', 1, 1),
+(14, 'Sate Taichan Bara', 'Rizky Firmansyah', 'taichan.jpg', 'Sate taichan pedas bakar bara api.', 'Sertifikasi Halal', 1, 2),
+(15, 'Kebab Turki Sultan', 'Fikri Maulana', 'kebab.jpg', 'Kebab jumbo dengan daging premium.', 'Sertifikasi Halal', 3, 3),
+(16, 'Tahu Crispy Meledak', 'Rani Amelia', 'tahu_crispy.jpg', 'Tahu crispy aneka bumbu.', 'Halal Belum Sertifikasi', 3, 4),
+(17, 'Mochi Ice Cream Tokyo', 'Aurel Wijaya', 'mochi.jpg', 'Dessert mochi ice cream berbagai rasa.', 'Sertifikasi Halal', 5, 5),
+(18, 'Seafood Bang Jo', 'Johan Saputra', 'seafood.jpg', 'Seafood saus padang dan BBQ.', 'Halal Belum Sertifikasi', 4, 6),
+(19, 'Chicken Katsu Kyoto', 'Kenji Prasetyo', 'katsu.jpg', 'Chicken katsu crispy ala Jepang.', 'Sertifikasi Halal', 7, 7),
+(20, 'Pisang Nugget Boom', 'Vina Lestari', 'pisang.jpg', 'Pisang nugget topping viral.', 'Halal Belum Sertifikasi', 5, 8),
+(21, 'Es Teh Nusantara', 'Bambang Hermawan', 'esteh.jpg', 'Minuman teh segar berbagai rasa.', 'Sertifikasi Halal', 2, 9),
+(22, 'Donat Kampung Premium', 'Mey Sintia', 'donat.jpg', 'Donat empuk topping premium.', 'Sertifikasi Halal', 9, 10),
+(23, 'Rice Bowl Okinawa', 'Raka Putra', 'ricebowl.jpg', 'Rice bowl ayam dan beef ala Jepang.', 'Sertifikasi Halal', 7, 1),
+(24, 'Makaroni Setan', 'Dio Kurniawan', 'makaroni.jpg', 'Makaroni pedas level neraka.', 'Halal Belum Sertifikasi', 3, 2),
+(25, 'Croffle Corner', 'Nadia Olivia', 'croffle.jpg', 'Croffle manis dan savory.', 'Sertifikasi Halal', 9, 3),
+(26, 'Bakmie Chinese Food', 'Steven Halim', 'bakmie.jpg', 'Bakmie dan chinese food autentik.', 'Non-Halal', 1, 4),
+(27, 'Sosis Bakar Volcano', 'Iqbal Ramadhan', 'sosis.jpg', 'Sosis bakar jumbo saus melimpah.', 'Halal Belum Sertifikasi', 3, 5);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `umkm_mitra`
+--
+
+CREATE TABLE `umkm_mitra` (
+  `id_umkm` int(11) NOT NULL,
+  `id_mitra` int(11) NOT NULL,
+  `link_mitra` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `umkm_mitra`
+--
+
+INSERT INTO `umkm_mitra` (`id_umkm`, `id_mitra`, `link_mitra`) VALUES
+(1, 1, 'https://gofood.link/seblak'),
+(1, 2, 'https://grabfood.link/seblak'),
+(2, 1, 'https://gofood.link/kopi'),
+(2, 3, 'https://shopeefood.link/kopi'),
+(3, 2, 'https://grabfood.link/dimsum'),
+(4, 1, 'https://gofood.link/burger'),
+(4, 2, 'https://grabfood.link/burger'),
+(5, 3, 'https://shopeefood.link/martabak'),
+(6, 1, 'https://gofood.link/geprek'),
+(7, 2, 'https://grabfood.link/sushi'),
+(8, 1, 'https://gofood.link/bakso'),
+(9, 3, 'https://shopeefood.link/thai'),
+(10, 2, 'https://grabfood.link/roti'),
+(11, 1, 'https://gofood.link/taco'),
+(12, 1, 'https://gofood.link/healthy'),
+(13, 1, 'https://gofood.link/nasigorenggila'),
+(13, 2, 'https://grabfood.link/nasigorenggila'),
+(13, 3, 'https://shopeefood.link/nasigorenggila'),
+(14, 1, 'https://gofood.link/taichanbara'),
+(14, 2, 'https://grabfood.link/taichanbara'),
+(15, 2, 'https://grabfood.link/kebabsultan'),
+(15, 3, 'https://shopeefood.link/kebabsultan'),
+(16, 1, 'https://gofood.link/tahucrispy'),
+(17, 2, 'https://grabfood.link/mochiice'),
+(18, 1, 'https://gofood.link/seafoodbangjo'),
+(18, 2, 'https://grabfood.link/seafoodbangjo'),
+(18, 3, 'https://shopeefood.link/seafoodbangjo'),
+(19, 1, 'https://gofood.link/katsukyoto'),
+(19, 2, 'https://grabfood.link/katsukyoto'),
+(20, 3, 'https://shopeefood.link/pisangboom'),
+(21, 1, 'https://gofood.link/estehnusantara'),
+(21, 2, 'https://grabfood.link/estehnusantara'),
+(22, 1, 'https://gofood.link/donatpremium'),
+(23, 1, 'https://gofood.link/ricebowlokinawa'),
+(23, 3, 'https://shopeefood.link/ricebowlokinawa'),
+(24, 2, 'https://grabfood.link/makaronisetan'),
+(25, 1, 'https://gofood.link/crofflecorner'),
+(25, 2, 'https://grabfood.link/crofflecorner'),
+(26, 1, 'https://gofood.link/bakmiechinese'),
+(27, 2, 'https://grabfood.link/sosisvolcano'),
+(27, 3, 'https://shopeefood.link/sosisvolcano');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `umkm_pembayaran`
+--
+
+CREATE TABLE `umkm_pembayaran` (
+  `id_umkm` int(11) NOT NULL,
+  `id_metode` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `umkm_pembayaran`
+--
+
+INSERT INTO `umkm_pembayaran` (`id_umkm`, `id_metode`) VALUES
+(1, 1),
+(1, 2),
+(1, 5),
+(2, 1),
+(2, 2),
+(2, 4),
+(3, 1),
+(3, 6),
+(4, 1),
+(4, 2),
+(4, 7),
+(5, 1),
+(5, 2),
+(5, 8),
+(6, 1),
+(6, 2),
+(7, 1),
+(7, 3),
+(8, 1),
+(8, 2),
+(9, 1),
+(9, 4),
+(10, 1),
+(10, 2),
+(11, 1),
+(11, 3),
+(12, 1),
+(12, 2),
+(12, 5),
+(13, 1),
+(13, 2),
+(13, 4),
+(13, 5),
+(14, 1),
+(14, 2),
+(14, 7),
+(15, 1),
+(15, 2),
+(15, 8),
+(16, 1),
+(16, 2),
+(17, 1),
+(17, 3),
+(17, 5),
+(18, 1),
+(18, 2),
+(18, 6),
+(19, 1),
+(19, 2),
+(19, 4),
+(20, 1),
+(20, 5),
+(21, 1),
+(21, 2),
+(21, 4),
+(21, 7),
+(22, 1),
+(22, 2),
+(22, 8),
+(23, 1),
+(23, 2),
+(23, 3),
+(24, 1),
+(24, 5),
+(24, 7),
+(25, 1),
+(25, 2),
+(25, 4),
+(26, 1),
+(26, 6),
+(27, 1),
+(27, 2),
+(27, 8);
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `ekstra_menu`
+--
+ALTER TABLE `ekstra_menu`
+  ADD PRIMARY KEY (`id_ekstra_menu`),
+  ADD KEY `id_menu` (`id_menu`);
+
+--
+-- Indexes for table `ekstra_umkm`
+--
+ALTER TABLE `ekstra_umkm`
+  ADD PRIMARY KEY (`id_ekstra_umkm`),
+  ADD KEY `id_umkm` (`id_umkm`);
+
+--
+-- Indexes for table `foto_booth`
+--
+ALTER TABLE `foto_booth`
+  ADD PRIMARY KEY (`id_foto`),
+  ADD KEY `id_umkm` (`id_umkm`);
+
+--
+-- Indexes for table `jadwal`
+--
+ALTER TABLE `jadwal`
+  ADD PRIMARY KEY (`id_jadwal`),
+  ADD UNIQUE KEY `uq_umkm_hari` (`id_umkm`,`hari`);
+
+--
+-- Indexes for table `kategori`
+--
+ALTER TABLE `kategori`
+  ADD PRIMARY KEY (`id_kategori`);
+
+--
+-- Indexes for table `kategori_rasa`
+--
+ALTER TABLE `kategori_rasa`
+  ADD PRIMARY KEY (`id_rasa`);
+
+--
+-- Indexes for table `lokasi`
+--
+ALTER TABLE `lokasi`
+  ADD PRIMARY KEY (`id_lokasi`);
+
+--
+-- Indexes for table `menu`
+--
+ALTER TABLE `menu`
+  ADD PRIMARY KEY (`id_menu`),
+  ADD KEY `id_umkm` (`id_umkm`);
+
+--
+-- Indexes for table `menu_rasa`
+--
+ALTER TABLE `menu_rasa`
+  ADD PRIMARY KEY (`id_menu`,`id_rasa`),
+  ADD KEY `id_rasa` (`id_rasa`);
+
+--
+-- Indexes for table `metode_pembayaran`
+--
+ALTER TABLE `metode_pembayaran`
+  ADD PRIMARY KEY (`id_metode`);
+
+--
+-- Indexes for table `mitra`
+--
+ALTER TABLE `mitra`
+  ADD PRIMARY KEY (`id_mitra`);
+
+--
+-- Indexes for table `umkm`
+--
+ALTER TABLE `umkm`
+  ADD PRIMARY KEY (`id_umkm`),
+  ADD KEY `id_kategori` (`id_kategori`),
+  ADD KEY `id_lokasi` (`id_lokasi`);
+
+--
+-- Indexes for table `umkm_mitra`
+--
+ALTER TABLE `umkm_mitra`
+  ADD PRIMARY KEY (`id_umkm`,`id_mitra`),
+  ADD KEY `id_mitra` (`id_mitra`);
+
+--
+-- Indexes for table `umkm_pembayaran`
+--
+ALTER TABLE `umkm_pembayaran`
+  ADD PRIMARY KEY (`id_umkm`,`id_metode`),
+  ADD KEY `id_metode` (`id_metode`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `ekstra_menu`
+--
+ALTER TABLE `ekstra_menu`
+  MODIFY `id_ekstra_menu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
+
+--
+-- AUTO_INCREMENT for table `ekstra_umkm`
+--
+ALTER TABLE `ekstra_umkm`
+  MODIFY `id_ekstra_umkm` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+
+--
+-- AUTO_INCREMENT for table `foto_booth`
+--
+ALTER TABLE `foto_booth`
+  MODIFY `id_foto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT for table `jadwal`
+--
+ALTER TABLE `jadwal`
+  MODIFY `id_jadwal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=353;
+
+--
+-- AUTO_INCREMENT for table `kategori`
+--
+ALTER TABLE `kategori`
+  MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `kategori_rasa`
+--
+ALTER TABLE `kategori_rasa`
+  MODIFY `id_rasa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `lokasi`
+--
+ALTER TABLE `lokasi`
+  MODIFY `id_lokasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `menu`
+--
+ALTER TABLE `menu`
+  MODIFY `id_menu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=191;
+
+--
+-- AUTO_INCREMENT for table `metode_pembayaran`
+--
+ALTER TABLE `metode_pembayaran`
+  MODIFY `id_metode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `mitra`
+--
+ALTER TABLE `mitra`
+  MODIFY `id_mitra` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `umkm`
+--
+ALTER TABLE `umkm`
+  MODIFY `id_umkm` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `ekstra_menu`
+--
+ALTER TABLE `ekstra_menu`
+  ADD CONSTRAINT `ekstra_menu_ibfk_1` FOREIGN KEY (`id_menu`) REFERENCES `menu` (`id_menu`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `ekstra_umkm`
+--
+ALTER TABLE `ekstra_umkm`
+  ADD CONSTRAINT `ekstra_umkm_ibfk_1` FOREIGN KEY (`id_umkm`) REFERENCES `umkm` (`id_umkm`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `foto_booth`
+--
+ALTER TABLE `foto_booth`
+  ADD CONSTRAINT `foto_booth_ibfk_1` FOREIGN KEY (`id_umkm`) REFERENCES `umkm` (`id_umkm`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `jadwal`
+--
+ALTER TABLE `jadwal`
+  ADD CONSTRAINT `jadwal_ibfk_1` FOREIGN KEY (`id_umkm`) REFERENCES `umkm` (`id_umkm`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `menu`
+--
+ALTER TABLE `menu`
+  ADD CONSTRAINT `menu_ibfk_1` FOREIGN KEY (`id_umkm`) REFERENCES `umkm` (`id_umkm`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `menu_rasa`
+--
+ALTER TABLE `menu_rasa`
+  ADD CONSTRAINT `menu_rasa_ibfk_1` FOREIGN KEY (`id_menu`) REFERENCES `menu` (`id_menu`) ON DELETE CASCADE,
+  ADD CONSTRAINT `menu_rasa_ibfk_2` FOREIGN KEY (`id_rasa`) REFERENCES `kategori_rasa` (`id_rasa`);
+
+--
+-- Constraints for table `umkm`
+--
+ALTER TABLE `umkm`
+  ADD CONSTRAINT `umkm_ibfk_1` FOREIGN KEY (`id_kategori`) REFERENCES `kategori` (`id_kategori`),
+  ADD CONSTRAINT `umkm_ibfk_2` FOREIGN KEY (`id_lokasi`) REFERENCES `lokasi` (`id_lokasi`);
+
+--
+-- Constraints for table `umkm_mitra`
+--
+ALTER TABLE `umkm_mitra`
+  ADD CONSTRAINT `umkm_mitra_ibfk_1` FOREIGN KEY (`id_umkm`) REFERENCES `umkm` (`id_umkm`) ON DELETE CASCADE,
+  ADD CONSTRAINT `umkm_mitra_ibfk_2` FOREIGN KEY (`id_mitra`) REFERENCES `mitra` (`id_mitra`);
+
+--
+-- Constraints for table `umkm_pembayaran`
+--
+ALTER TABLE `umkm_pembayaran`
+  ADD CONSTRAINT `umkm_pembayaran_ibfk_1` FOREIGN KEY (`id_umkm`) REFERENCES `umkm` (`id_umkm`) ON DELETE CASCADE,
+  ADD CONSTRAINT `umkm_pembayaran_ibfk_2` FOREIGN KEY (`id_metode`) REFERENCES `metode_pembayaran` (`id_metode`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
