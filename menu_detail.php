@@ -83,16 +83,16 @@ function halalBadge($status) {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><?= $menu['nama_menu'] ?> — StreetFood Saparua</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-</head>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?= $menu['nama_menu'] ?> — StreetFood Saparua</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  </head>
   <body class="detail-page">
     <header class="site-header">
       <div class="header-inner">
@@ -160,12 +160,12 @@ function halalBadge($status) {
           </div>
 
           <?php if (!empty($rasa_list)): ?>
-          <div class="menu-detail-rasa">
-            <span class="detail-sub-label">Kategori Rasa:</span>
-            <?php foreach ($rasa_list as $r): ?>
-              <span class="rasa-chip"><?= $r ?></span>
-            <?php endforeach; ?>
-          </div>
+            <div class="menu-detail-rasa">
+              <span class="detail-sub-label">Kategori Rasa:</span>
+              <?php foreach ($rasa_list as $r): ?>
+                <span class="rasa-chip"><?= $r ?></span>
+              <?php endforeach; ?>
+            </div>
           <?php endif; ?>
 
           <a href="umkm_detail.php?id=<?= $menu['id_umkm'] ?>" class="btn-visit-umkm">
@@ -178,127 +178,127 @@ function halalBadge($status) {
     <?php $ada_ekstra = !empty($ekstra_menu) || !empty($ekstra_umkm); ?>
 
     <?php if ($ada_ekstra): ?>
-    <div class="ekstra-section-wrap">
-      <div class="ekstra-section-inner">
-        <h2 class="ekstra-section-title">
-          <span>✚</span> Tambahan & Ekstra
-        </h2>
-        <p class="ekstra-section-sub">Pilih ekstra yang tersedia untuk menu ini</p>
+      <div class="ekstra-section-wrap">
+        <div class="ekstra-section-inner">
+          <h2 class="ekstra-section-title">
+            <span>✚</span> Tambahan & Ekstra
+          </h2>
+          <p class="ekstra-section-sub">Pilih ekstra yang tersedia untuk menu ini</p>
 
-        <div class="ekstra-cols">
+          <div class="ekstra-cols">
 
-          <!-- Ekstra Khusus Menu -->
-          <?php if (!empty($ekstra_menu)): ?>
-          <div class="ekstra-col">
-            <div class="ekstra-card">
-              <div class="ekstra-card-header ekstra-header-menu">
-                <span class="ekstra-icon">🍴</span>
-                <div>
-                  <h3>Ekstra Khusus Menu Ini</h3>
-                  <p>Tambahan yang hanya berlaku untuk <strong><?= $menu['nama_menu'] ?></strong></p>
-                </div>
-              </div>
-              <div class="ekstra-list">
-                <?php foreach ($ekstra_menu as $e): ?>
-                <div class="ekstra-row">
-                  <div class="ekstra-row-info">
-                    <span class="ekstra-nama"><?= $e['nama_ekstra'] ?></span>
-                    <?php if ($e['keterangan']): ?>
-                      <span class="ekstra-ket"><?= $e['keterangan'] ?></span>
-                    <?php endif; ?>
+            <!-- Ekstra Khusus Menu -->
+            <?php if (!empty($ekstra_menu)): ?>
+              <div class="ekstra-col">
+                <div class="ekstra-card">
+                  <div class="ekstra-card-header ekstra-header-menu">
+                    <span class="ekstra-icon">🍴</span>
+                    <div>
+                      <h3>Ekstra Khusus Menu Ini</h3>
+                      <p>Tambahan yang hanya berlaku untuk <strong><?= $menu['nama_menu'] ?></strong></p>
+                    </div>
                   </div>
-                  <span class="ekstra-harga">
-                    <?php if ($e['harga_ekstra'] > 0) { ?>
-                      +Rp<?= number_format($e['harga_ekstra'], 0, ',', '.') ?>
-                    <?php } else { ?>
-                      <span class="free-tag">GRATIS</span>
-                    <?php } ?>
-                  </span>
-                </div>
-                <?php endforeach; ?>
-              </div>
-            </div>
-          </div>
-          <?php endif; ?>
-
-          <!-- Ekstra Semua Menu (UMKM) -->
-          <?php if (!empty($ekstra_umkm)): ?>
-          <div class="ekstra-col">
-            <div class="ekstra-card">
-              <div class="ekstra-card-header ekstra-header-umkm">
-                <span class="ekstra-icon">🏪</span>
-                <div>
-                  <h3>Ekstra dari <?= $menu['nama_stand'] ?></h3>
-                  <p>Tambahan yang berlaku untuk semua menu di UMKM ini</p>
-                </div>
-              </div>
-              <div class="ekstra-list">
-                <?php foreach ($ekstra_umkm as $e): ?>
-                <div class="ekstra-row">
-                  <div class="ekstra-row-info">
-                    <span class="ekstra-nama"><?= $e['nama_ekstra'] ?></span>
-                    <?php if ($e['keterangan']): ?>
-                      <span class="ekstra-ket"><?= $e['keterangan'] ?></span>
-                    <?php endif; ?>
+                  <div class="ekstra-list">
+                    <?php foreach ($ekstra_menu as $e): ?>
+                      <div class="ekstra-row">
+                        <div class="ekstra-row-info">
+                          <span class="ekstra-nama"><?= $e['nama_ekstra'] ?></span>
+                          <?php if ($e['keterangan']): ?>
+                            <span class="ekstra-ket"><?= $e['keterangan'] ?></span>
+                          <?php endif; ?>
+                        </div>
+                        <span class="ekstra-harga">
+                          <?php if ($e['harga_ekstra'] > 0): ?>
+                            +Rp<?= number_format($e['harga_ekstra'], 0, ',', '.') ?>
+                          <?php else: ?>
+                            <span class="free-tag">GRATIS</span>
+                          <?php endif; ?>
+                        </span>
+                      </div>
+                    <?php endforeach; ?>
                   </div>
-                  <span class="ekstra-harga">
-                    <?php if ($e['harga_ekstra'] > 0) { ?>
-                      +Rp<?= number_format($e['harga_ekstra'], 0, ',', '.') ?>
-                    <?php } else { ?>
-                      <span class="free-tag">GRATIS</span>
-                    <?php } ?>
-                  </span>
                 </div>
-                <?php endforeach; ?>
               </div>
-            </div>
-          </div>
-          <?php endif; ?>
+            <?php endif; ?>
 
+            <!-- Ekstra Semua Menu (UMKM) -->
+            <?php if (!empty($ekstra_umkm)): ?>
+              <div class="ekstra-col">
+                <div class="ekstra-card">
+                  <div class="ekstra-card-header ekstra-header-umkm">
+                    <span class="ekstra-icon">🏪</span>
+                    <div>
+                      <h3>Ekstra dari <?= $menu['nama_stand'] ?></h3>
+                      <p>Tambahan yang berlaku untuk semua menu di UMKM ini</p>
+                    </div>
+                  </div>
+                  <div class="ekstra-list">
+                    <?php foreach ($ekstra_umkm as $e): ?>
+                      <div class="ekstra-row">
+                        <div class="ekstra-row-info">
+                          <span class="ekstra-nama"><?= $e['nama_ekstra'] ?></span>
+                          <?php if ($e['keterangan']): ?>
+                            <span class="ekstra-ket"><?= $e['keterangan'] ?></span>
+                          <?php endif; ?>
+                        </div>
+                        <span class="ekstra-harga">
+                          <?php if ($e['harga_ekstra'] > 0): ?>
+                            +Rp<?= number_format($e['harga_ekstra'], 0, ',', '.') ?>
+                          <?php else: ?>
+                            <span class="free-tag">GRATIS</span>
+                          <?php endif; ?>
+                        </span>
+                      </div>
+                    <?php endforeach; ?>
+                  </div>
+                </div>
+              </div>
+            <?php endif; ?>
+
+          </div>
         </div>
       </div>
-    </div>
     <?php endif; ?>
 
     <?php if (!empty($other_menus)): ?>
-    <div class="other-menu-section">
-      <div class="other-menu-inner">
-        <h2 class="menu-section-title">
-          Menu Lain dari <?= $menu['nama_stand'] ?>
-        </h2>
-        <div class="menu-grid">
-          <?php foreach ($other_menus as $mn): ?>
-          <div class="menu-card" onclick="window.location='menu_detail.php?id=<?= $mn['id_menu'] ?>'">
-            <div class="menu-card-img">
-              <?php if (!empty($mn['foto_menu']) && file_exists("images/" . $mn['foto_menu'])): ?>
-                <img src="images/<?= $mn['foto_menu'] ?>" alt="<?= $mn['nama_menu'] ?>">
-              <?php else: ?>
-                <div class="menu-img-ph-big">🍴</div>
-              <?php endif; ?>
-            </div>
-            <div class="menu-card-body">
-              <h4 class="menu-card-name"><?= $mn['nama_menu'] ?></h4>
-              <?php if ($mn['rasa_list']): ?>
-              <p class="menu-card-rasa">
-                <?php foreach (explode(', ', $mn['rasa_list']) as $r): ?>
-                  <span class="rasa-chip"><?= trim($r) ?></span>
-                <?php endforeach; ?>
-              </p>
-              <?php endif; ?>
-              <p class="menu-card-price">
-                Rp<?= number_format($mn['harga_menu'], 0, ',', '.') ?>
-                <?php if (!empty($mn['satuan'])) { ?>
-                  <span class="menu-satuan">
-                    / <?= $mn['satuan'] ?>
-                  </span>
-                <?php } ?>
-              </p>
-            </div>
+      <div class="other-menu-section">
+        <div class="other-menu-inner">
+          <h2 class="menu-section-title">
+            Menu Lain dari <?= $menu['nama_stand'] ?>
+          </h2>
+          <div class="menu-grid">
+            <?php foreach ($other_menus as $mn): ?>
+              <div class="menu-card" onclick="window.location='menu_detail.php?id=<?= $mn['id_menu'] ?>'">
+                <div class="menu-card-img">
+                  <?php if (!empty($mn['foto_menu']) && file_exists("images/" . $mn['foto_menu'])): ?>
+                    <img src="images/<?= $mn['foto_menu'] ?>" alt="<?= $mn['nama_menu'] ?>">
+                  <?php else: ?>
+                    <div class="menu-img-ph-big">🍴</div>
+                  <?php endif; ?>
+                </div>
+                <div class="menu-card-body">
+                  <h4 class="menu-card-name"><?= $mn['nama_menu'] ?></h4>
+                  <?php if ($mn['rasa_list']): ?>
+                    <p class="menu-card-rasa">
+                      <?php foreach (explode(', ', $mn['rasa_list']) as $r): ?>
+                        <span class="rasa-chip"><?= trim($r) ?></span>
+                      <?php endforeach; ?>
+                    </p>
+                  <?php endif; ?>
+                  <p class="menu-card-price">
+                    Rp<?= number_format($mn['harga_menu'], 0, ',', '.') ?>
+                    <?php if (!empty($mn['satuan'])): ?>
+                      <span class="menu-satuan">
+                        / <?= $mn['satuan'] ?>
+                      </span>
+                    <?php endif; ?>
+                  </p>
+                </div>
+              </div>
+            <?php endforeach; ?>
           </div>
-          <?php endforeach; ?>
         </div>
       </div>
-    </div>
     <?php endif; ?>
 
     <div class="back-bar-menu">

@@ -96,8 +96,8 @@ if ($filter_type === 'jam' && $jam_input) {
   $filter_label  = "Buka hari $hari_filter pukul $jam_input";
 
   $sql = "SELECT DISTINCT u.id_umkm, u.nama_stand, u.nama_pemilik, u.foto, u.status_halal,
-                k.jenis_kategori, l.deskripsi as alamat,
-                j.hari, j.jam_buka, j.jam_tutup
+            k.jenis_kategori, l.deskripsi as alamat,
+            j.hari, j.jam_buka, j.jam_tutup
           FROM UMKM u
           LEFT JOIN KATEGORI k ON u.id_kategori = k.id_kategori
           LEFT JOIN LOKASI l ON u.id_lokasi = l.id_lokasi
@@ -114,24 +114,24 @@ if ($filter_type === 'jam' && $jam_input) {
 } elseif ($filter_type === 'harga' && ($harga_min !== '' || $harga_max !== '')) {
   $active_filter = true;
   if ($harga_min != '') {
-    $min = (float)$harga_min;
+    $min = $harga_min;
   } else {
     $min = 0;
   }
   if ($harga_max != '') {
-    $max = (float)$harga_max;
+    $max = $harga_max;
   } else {
     $max = PHP_INT_MAX;
   }
   $filter_label = "Harga Rp" . number_format($min, 0, ',', '.') . " - Rp";
   if ($harga_max != '') {
-    $filter_label .= number_format($max, 0, ',', '.');
+    $filter_label = $filter_label . number_format($max, 0, ',', '.');
   } else {
-    $filter_label .= '∞';
+    $filter_label = $filter_label . '∞';
   }
 
   $sql = "SELECT DISTINCT u.id_umkm, u.nama_stand, u.nama_pemilik, u.foto, u.status_halal,
-                k.jenis_kategori, l.deskripsi as alamat
+            k.jenis_kategori, l.deskripsi as alamat
           FROM UMKM u
           LEFT JOIN KATEGORI k ON u.id_kategori=k.id_kategori
           LEFT JOIN LOKASI l ON u.id_lokasi=l.id_lokasi
@@ -186,8 +186,9 @@ $filter_count = count($umkm_list);
 
 function getIsOpen($koneksi, $umkm_id, $hari_ini, $now_time) {
   $id = (int)$umkm_id;
-  $result = mysqli_query($koneksi,"SELECT jam_buka, jam_tutup FROM JADWAL
-                                  WHERE id_umkm = $id AND hari = '$hari_ini' LIMIT 1");
+  $result = mysqli_query($koneksi,"SELECT jam_buka, jam_tutup 
+                                    FROM JADWAL
+                                    WHERE id_umkm = $id AND hari = '$hari_ini'");
   if ($row = mysqli_fetch_assoc($result)) {
     return ($now_time >= $row['jam_buka'] && $now_time <= $row['jam_tutup']);
   }
@@ -198,12 +199,12 @@ function getFilteredMenu($koneksi, $umkm_id, $filter_type, $harga_min, $harga_ma
   $menu = [];
   if ($filter_type === 'harga') {
     if ($harga_min != '') {
-      $min = (float)$harga_min;
+      $min = $harga_min;
     } else {
       $min = 0;
     }
     if ($harga_max != '') {
-      $max = (float)$harga_max;
+      $max = $harga_max;
     } else {
       $max = PHP_INT_MAX;
     }
@@ -368,12 +369,12 @@ function getMitraUmkm($koneksi, $umkm_id) {
           </h3>
           <?php foreach ($halal_data as $h): ?>
             <?php
-              $badge_color = 'yellow';
-              if ($h['status_halal'] == 'Sertifikasi Halal') {
-                $badge_color = 'green';
-              } elseif ($h['status_halal'] == 'Non-Halal') {
-                $badge_color = 'red';
-              }
+            $badge_color = 'yellow';
+            if ($h['status_halal'] == 'Sertifikasi Halal') {
+              $badge_color = 'green';
+            } elseif ($h['status_halal'] == 'Non-Halal') {
+              $badge_color = 'red';
+            }
             ?>
             <div class="sidebar-row">
               <span class="sidebar-row-label"><?= ($h['status_halal']) ?></span>
@@ -394,17 +395,17 @@ function getMitraUmkm($koneksi, $umkm_id) {
           <p class="sidebar-note">
             Selain cash:
             <?php
-              $non_cash = [];
-              foreach ($bayar_data as $b) {
-                if (strtolower($b['metode_pembayaran']) != 'cash') {
-                  $non_cash[] = $b['metode_pembayaran'];
-                }
+            $non_cash = [];
+            foreach ($bayar_data as $b) {
+              if (strtolower($b['metode_pembayaran']) != 'cash') {
+                $non_cash[] = $b['metode_pembayaran'];
               }
-              if (!empty($non_cash)) {
-                echo implode(', ', $non_cash);
-              } else {
-                echo '-';
-              }
+            }
+            if (!empty($non_cash)) {
+              echo implode(', ', $non_cash);
+            } else {
+              echo '-';
+            }
             ?>
           </p>
         </div>
@@ -412,128 +413,128 @@ function getMitraUmkm($koneksi, $umkm_id) {
 
       <main class="main-content">
         <?php if ($active_filter): ?>
-        <div class="filter-result-header">
-          <div class="filter-result-info">
-            <span class="filter-result-tag"><?= $filter_label ?></span>
-            <strong><?= $filter_count ?> UMKM</strong> ditemukan
+          <div class="filter-result-header">
+            <div class="filter-result-info">
+              <span class="filter-result-tag"><?= $filter_label ?></span>
+              <strong><?= $filter_count ?> UMKM</strong> ditemukan
+            </div>
+            <a href="index.php" class="link-reset">Lihat semua UMKM →</a>
           </div>
-          <a href="index.php" class="link-reset">Lihat semua UMKM →</a>
-        </div>
         <?php else: ?>
-        <div class="section-heading">
-          <h2>Semua UMKM <span class="count-badge"><?= count($umkm_list) ?></span></h2>
-          <p>Klik kartu UMKM untuk lihat detail & menu lengkap</p>
-        </div>
+          <div class="section-heading">
+            <h2>Semua UMKM <span class="count-badge"><?= count($umkm_list) ?></span></h2>
+            <p>Klik kartu UMKM untuk lihat detail & menu lengkap</p>
+          </div>
         <?php endif; ?>
 
         <div class="umkm-grid">
           <?php foreach ($umkm_list as $u):
-            if ($filter_type === 'jam') {
-              $mitra_links = getMitraUmkm($koneksi, $u['id_umkm']);
-            } else {
-              $mitra_links = [];
-            }
-            if ($filter_type === 'harga' || $filter_type === 'rasa') {
-              $filtered_menu = getFilteredMenu($koneksi, $u['id_umkm'], $filter_type, $harga_min, $harga_max, $rasa_id);
-            } else {
-              $filtered_menu = [];
-            }
-            if (!$active_filter) {
-              $is_open = getIsOpen($koneksi, $u['id_umkm'], $hari_ini, $now_time);
-            } else {
-              $is_open = false;
-            }
+          if ($filter_type === 'jam') {
+            $mitra_links = getMitraUmkm($koneksi, $u['id_umkm']);
+          } else {
+            $mitra_links = [];
+          }
+          if ($filter_type === 'harga' || $filter_type === 'rasa') {
+            $filtered_menu = getFilteredMenu($koneksi, $u['id_umkm'], $filter_type, $harga_min, $harga_max, $rasa_id);
+          } else {
+            $filtered_menu = [];
+          }
+          if (!$active_filter) {
+            $is_open = getIsOpen($koneksi, $u['id_umkm'], $hari_ini, $now_time);
+          } else {
+            $is_open = false;
+          }
           ?>
-          <article class="umkm-card" onclick="window.location='umkm_detail.php?id=<?= $u['id_umkm'] ?>'">
-            <div class="card-img-wrap">
-              <?php if (!empty($u['foto']) && file_exists("images/" . $u['foto'])): ?>
-                <img src="images/<?= $u['foto'] ?>" alt="<?= $u['nama_stand'] ?>" loading="lazy">
-              <?php else: ?>
-                <div class="card-img-placeholder">🍽️</div>
-              <?php endif; ?>
-              <span class="card-kategori">
-                <?php
-                if (isset($u['jenis_kategori'])) {
-                  echo $u['jenis_kategori'];
-                } else {
-                  echo 'Umum';
-                }
-                ?>
-              </span>
-              <?php if (!$active_filter): ?>
-                <?php
-                if ($is_open) {
-                  $status_class = 'open';
-                  $status_text  = '● Buka';
-                } else {
-                  $status_class = 'closed';
-                  $status_text  = '● Tutup';
-                }
-                ?>
-                <span class="card-status-dot <?= $status_class ?>">
-                  <?= $status_text ?>
-                </span>
-              <?php endif; ?>
-            </div>
-
-            <div class="card-body">
-              <h3 class="card-title"><?= ($u['nama_stand']) ?></h3>
-              <p class="card-owner">
-                <span>👤</span>
-                <?= ($u['nama_pemilik']) ?>
-              </p>
-
-              <?php if ($filter_type === 'jam' && !empty($u['jam_buka'])): ?>
-                <p class="card-jadwal">
-                  <span>🕗</span>
-                  <?= $u['hari'] ?>
-                  <?= substr($u['jam_buka'], 0, 5) ?> - <?= substr($u['jam_tutup'], 0, 5) ?>
-                </p>
-                <?php if (!empty($mitra_links)): ?>
-                  <div class="card-mitra">
-                    <?php foreach ($mitra_links as $m): ?>
-                      <?php if ($m['link_mitra']): ?>
-                        <div class="mitra-link">
-                          <?= $m['nama_mitra'] ?>
-                        </div>
-                      <?php else: ?>
-                        <span class="mitra-tag"><?= $m['nama_mitra'] ?></span>
-                      <?php endif; ?>
-                    <?php endforeach; ?>
-                  </div>
+            <article class="umkm-card" onclick="window.location='umkm_detail.php?id=<?= $u['id_umkm'] ?>'">
+              <div class="card-img-wrap">
+                <?php if (!empty($u['foto']) && file_exists("images/" . $u['foto'])): ?>
+                  <img src="images/<?= $u['foto'] ?>" alt="<?= $u['nama_stand'] ?>" loading="lazy">
+                <?php else: ?>
+                  <div class="card-img-placeholder">🍽️</div>
                 <?php endif; ?>
-              <?php endif; ?>
+                <span class="card-kategori">
+                  <?php
+                  if (isset($u['jenis_kategori'])) {
+                    echo $u['jenis_kategori'];
+                  } else {
+                    echo 'Umum';
+                  }
+                  ?>
+                </span>
+                <?php if (!$active_filter): ?>
+                  <?php
+                  if ($is_open) {
+                    $status_class = 'open';
+                    $status_text  = '● Buka';
+                  } else {
+                    $status_class = 'closed';
+                    $status_text  = '● Tutup';
+                  }
+                  ?>
+                  <span class="card-status-dot <?= $status_class ?>">
+                    <?= $status_text ?>
+                  </span>
+                <?php endif; ?>
+              </div>
 
-              <?php if (($filter_type === 'harga' || $filter_type === 'rasa') && !empty($filtered_menu)): ?>
-                <div class="card-menu-list">
-                  <p class="menu-list-label">Menu yang sesuai:</p>
-                  <?php foreach ($filtered_menu as $mn): ?>
-                    <div class="menu-row">
-                      <span class="menu-name"><?= $mn['nama_menu'] ?></span>
-                      <span class="menu-price">
-                        Rp<?= number_format($mn['harga_menu'], 0, ',', '.') ?>
-                        <?php
+              <div class="card-body">
+                <h3 class="card-title"><?= ($u['nama_stand']) ?></h3>
+                <p class="card-owner">
+                  <span>👤</span>
+                  <?= ($u['nama_pemilik']) ?>
+                </p>
+
+                <?php if ($filter_type === 'jam' && !empty($u['jam_buka'])): ?>
+                  <p class="card-jadwal">
+                    <span>🕗</span>
+                    <?= $u['hari'] ?>
+                    <?= substr($u['jam_buka'], 0, 5) ?> - <?= substr($u['jam_tutup'], 0, 5) ?>
+                  </p>
+                  <?php if (!empty($mitra_links)): ?>
+                    <div class="card-mitra">
+                      <?php foreach ($mitra_links as $m): ?>
+                        <?php if ($m['link_mitra']): ?>
+                          <div class="mitra-link">
+                            <?= $m['nama_mitra'] ?>
+                          </div>
+                        <?php else: ?>
+                          <span class="mitra-tag"><?= $m['nama_mitra'] ?></span>
+                        <?php endif; ?>
+                      <?php endforeach; ?>
+                    </div>
+                  <?php endif; ?>
+                <?php endif; ?>
+
+                <?php if (($filter_type === 'harga' || $filter_type === 'rasa') && !empty($filtered_menu)): ?>
+                  <div class="card-menu-list">
+                    <p class="menu-list-label">Menu yang sesuai:</p>
+                    <?php foreach ($filtered_menu as $mn): ?>
+                      <div class="menu-row">
+                        <span class="menu-name"><?= $mn['nama_menu'] ?></span>
+                        <span class="menu-price">
+                          Rp<?= number_format($mn['harga_menu'], 0, ',', '.') ?>
+                          <?php
                           if ($mn['satuan']) {
                             echo '/' . $mn['satuan'];
                           }
-                        ?>
-                      </span>                  
-                    </div>
-                  <?php endforeach; ?>
-                </div>
-              <?php endif; ?>
-            </div>
+                          ?>
+                        </span>                  
+                      </div>
+                    <?php endforeach; ?>
+                  </div>
+                <?php endif; ?>
+              </div>
 
-            <div class="card-footer">
-              <span class="card-detail-link">Lihat Detail →</span>
-            </div>
-          </article>
+              <div class="card-footer">
+                <span class="card-detail-link">Lihat Detail →</span>
+              </div>
+            </article>
           <?php endforeach; ?>
           <?php if (empty($umkm_list)): ?>
-          <div class="empty-state">
-            <span>🔍</span><p>Tidak ada UMKM yang sesuai filter.</p>
-            <a href="index.php">Reset filter</a>
-          </div>
+            <div class="empty-state">
+              <span>🔍</span><p>Tidak ada UMKM yang sesuai filter.</p>
+              <a href="index.php">Reset filter</a>
+            </div>
           <?php endif; ?>
         </div>
       </main>
@@ -543,12 +544,12 @@ function getMitraUmkm($koneksi, $umkm_id) {
           <h3 class="sidebar-title"><span class="sidebar-icon">🛵</span> Mitra Online</h3>
           <?php foreach ($mitra_data as $i => $m): ?>
             <?php
-              $class = '';
-              $icon = '';
-              if ($i == 0) {
-                $class = 'top-mitra';
-                $icon = '🏆 ';
-              }
+            $class = '';
+            $icon = '';
+            if ($i == 0) {
+              $class = 'top-mitra';
+              $icon = '🏆 ';
+            }
             ?>
             <div class="sidebar-row <?= $class ?>">
               <span class="sidebar-row-label"><?= $icon ?><?= $m['nama_mitra'] ?></span>
@@ -563,10 +564,10 @@ function getMitraUmkm($koneksi, $umkm_id) {
           <h3 class="sidebar-title"><span class="sidebar-icon">😋</span> Kategori Rasa</h3>
           <?php foreach ($rasa_all as $r): ?>
             <?php
-              $active_class = '';
-              if ($rasa_id == $r['id_rasa']) {
-                $active_class = 'active-rasa';
-              }
+            $active_class = '';
+            if ($rasa_id == $r['id_rasa']) {
+              $active_class = 'active-rasa';
+            }
             ?>
             <div class="sidebar-row">
               <a href="?filter=rasa&rasa=<?= $r['id_rasa'] ?>" class="sidebar-rasa-link <?= $active_class ?>">

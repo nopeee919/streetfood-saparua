@@ -135,19 +135,8 @@ function halalBadge($status) {
           <span class="logo-text">StreetFood<em>Saparua</em></span>
         </a>
         <div class="search-wrapper">
-          <form
-            class="search-bar"
-            id="searchForm"
-            action="search.php"
-            method="GET"
-          >
-            <input
-              type="text"
-              name="q"
-              id="searchInput"
-              placeholder="Cari nama UMKM atau menu..."
-              autocomplete="off"
-            />
+          <form class="search-bar" id="searchForm" action="search.php" method="GET">
+            <input type="text" name="q" id="searchInput" placeholder="Cari nama UMKM atau menu..." autocomplete="off">
             <button type="submit">
               <span>🔍</span>
             </button>
@@ -219,92 +208,92 @@ function halalBadge($status) {
             </div>
             <div class="jadwal-week-grid">
               <?php foreach ($semua_hari as $h):
-                $ada    = isset($jadwal_map[$h]);
-                $active = ($h === $hari_ini);
+              $ada    = isset($jadwal_map[$h]);
+              $active = ($h === $hari_ini);
               ?>
-              <div class="jadwal-day-card
-                <?php if (!$ada) { echo 'day-tutup'; } ?>
-                <?php if ($active) { echo 'day-today'; } ?>">
-                <span class="day-name"><?= $h ?></span>
-                <?php if ($ada): ?>
-                  <span class="day-jam"><?= substr($jadwal_map[$h]['jam_buka'], 0, 5) ?></span>
-                  <span class="day-sep">-</span>
-                  <span class="day-jam"><?= substr($jadwal_map[$h]['jam_tutup'], 0, 5) ?></span>
-                <?php else: ?>
-                  <span class="day-tutup-label">Tutup</span>
-                <?php endif; ?>
-                <?php if ($active): ?>
-                  <span class="day-today-badge">Hari ini</span>
-                <?php endif; ?>
-              </div>
+                <div class="jadwal-day-card
+                  <?php if (!$ada) { echo 'day-tutup'; } ?>
+                  <?php if ($active) { echo 'day-today'; } ?>">
+                  <span class="day-name"><?= $h ?></span>
+                  <?php if ($ada): ?>
+                    <span class="day-jam"><?= substr($jadwal_map[$h]['jam_buka'], 0, 5) ?></span>
+                    <span class="day-sep">-</span>
+                    <span class="day-jam"><?= substr($jadwal_map[$h]['jam_tutup'], 0, 5) ?></span>
+                  <?php else: ?>
+                    <span class="day-tutup-label">Tutup</span>
+                  <?php endif; ?>
+                  <?php if ($active): ?>
+                    <span class="day-today-badge">Hari ini</span>
+                  <?php endif; ?>
+                </div>
               <?php endforeach; ?>
             </div>
           </div>
 
           <?php if (!empty($bayar_list)): ?>
-          <div class="detail-bayar">
-            <span>💳</span>
-            <strong>Pembayaran:</strong>
-            <?php foreach ($bayar_list as $b): ?>
-              <span class="bayar-pill"><?= $b['metode_pembayaran'] ?></span>
-            <?php endforeach; ?>
-          </div>
+            <div class="detail-bayar">
+              <span>💳</span>
+              <strong>Pembayaran:</strong>
+              <?php foreach ($bayar_list as $b): ?>
+                <span class="bayar-pill"><?= $b['metode_pembayaran'] ?></span>
+              <?php endforeach; ?>
+            </div>
           <?php endif; ?>
 
           <?php if (!empty($mitra_list)): ?>
-          <div class="detail-mitra">
-            <span>🌐</span>
-            <strong>Pesan Online:</strong>
-            <?php foreach ($mitra_list as $m): ?>
-              <?php if ($m['link_mitra']): ?>
-                <a href="<?= $m['link_mitra'] ?>" target="_blank" class="mitra-pill-link">
-                  <?= $m['nama_mitra'] ?> ↗
-                </a>
-              <?php else: ?>
-                <span class="mitra-pill"><?= $m['nama_mitra'] ?></span>
-              <?php endif; ?>
-            <?php endforeach; ?>
-          </div>
+            <div class="detail-mitra">
+              <span>🌐</span>
+              <strong>Pesan Online:</strong>
+              <?php foreach ($mitra_list as $m): ?>
+                <?php if ($m['link_mitra']): ?>
+                  <a href="<?= $m['link_mitra'] ?>" target="_blank" class="mitra-pill-link">
+                    <?= $m['nama_mitra'] ?> ↗
+                  </a>
+                <?php else: ?>
+                  <span class="mitra-pill"><?= $m['nama_mitra'] ?></span>
+                <?php endif; ?>
+              <?php endforeach; ?>
+            </div>
           <?php endif; ?>
         </div>
       </div>
     </div>
 
     <?php if (!empty($foto_booth)): ?>
-    <div class="booth-gallery-section">
-      <div class="booth-gallery-inner">
-        <h2 class="gallery-title">
-          <span>📸</span> Foto Booth
-        </h2>
-        <div class="booth-gallery-grid booth-count-<?= min(count($foto_booth), 5) ?>">
-          <?php foreach (array_slice($foto_booth, 0, 5) as $i => $f): ?>
-          <div class="booth-thumb <?php if ($i == 0) { echo 'booth-thumb-main'; } ?>" onclick="openLightbox(<?= $i ?>)">
-            <img src="images/booth/<?= $f['url_foto'] ?>" alt="<?php if (isset($f['keterangan'])) { echo $f['keterangan']; } else { echo 'Foto booth ' . ($i + 1); } ?>">
-            <?php if (!empty($f['keterangan'])): ?>
-              <div class="booth-thumb-caption"><?= $f['keterangan'] ?></div>
-            <?php endif; ?>
-            <?php if ($i === 3 && count($foto_booth) > 4): ?>
-              <div class="booth-more-overlay">+<?= count($foto_booth) - 4 ?> lagi</div>
-            <?php endif; ?>
+      <div class="booth-gallery-section">
+        <div class="booth-gallery-inner">
+          <h2 class="gallery-title">
+            <span>📸</span> Foto Booth
+          </h2>
+          <div class="booth-gallery-grid booth-count-<?= min(count($foto_booth), 5) ?>">
+            <?php foreach (array_slice($foto_booth, 0, 5) as $i => $f): ?>
+              <div class="booth-thumb <?php if ($i == 0) { echo 'booth-thumb-main'; } ?>" onclick="openLightbox(<?= $i ?>)">
+                <img src="images/booth/<?= $f['url_foto'] ?>" alt="<?php if (isset($f['keterangan'])) { echo $f['keterangan']; } else { echo 'Foto booth ' . ($i + 1); } ?>">
+                <?php if (!empty($f['keterangan'])): ?>
+                  <div class="booth-thumb-caption"><?= $f['keterangan'] ?></div>
+                <?php endif; ?>
+                <?php if ($i === 3 && count($foto_booth) > 4): ?>
+                  <div class="booth-more-overlay">+<?= count($foto_booth) - 4 ?> lagi</div>
+                <?php endif; ?>
+              </div>
+            <?php endforeach; ?>
           </div>
-          <?php endforeach; ?>
         </div>
       </div>
-    </div>
 
-    <div id="lightbox" class="lightbox" style="display:none">
-      <div class="lightbox-overlay" onclick="closeLightbox()"></div>
-      <div class="lightbox-content">
-        <button class="lb-close" onclick="closeLightbox()">✕</button>
-        <button class="lb-prev" id="lbPrev"><</button>
-        <div class="lb-img-wrap">
-          <img id="lbImg" src="" alt="">
-          <p id="lbCaption" class="lb-caption"></p>
+      <div id="lightbox" class="lightbox" style="display:none">
+        <div class="lightbox-overlay" onclick="closeLightbox()"></div>
+        <div class="lightbox-content">
+          <button class="lb-close" onclick="closeLightbox()">✕</button>
+          <button class="lb-prev" id="lbPrev"><</button>
+          <div class="lb-img-wrap">
+            <img id="lbImg" src="" alt="">
+            <p id="lbCaption" class="lb-caption"></p>
+          </div>
+          <button class="lb-next" id="lbNext">></button>
+          <p class="lb-counter"><span id="lbCurrent">1</span> / <?= count($foto_booth) ?></p>
         </div>
-        <button class="lb-next" id="lbNext">></button>
-        <p class="lb-counter"><span id="lbCurrent">1</span> / <?= count($foto_booth) ?></p>
       </div>
-    </div>
     <?php endif; ?>
 
     <div class="detail-menu-section">
@@ -356,48 +345,48 @@ function halalBadge($status) {
     </div>
 
     <?php if (!empty($ekstra_umkm)): ?>
-    <div class="ekstra-section-wrap">
-      <div class="ekstra-section-inner">
-        <h2 class="ekstra-section-title">
-          <span>+</span> Ekstra Berlaku untuk Semua Menu
-        </h2>
-        <p class="ekstra-section-sub">
-          Tambahan berikut bisa dipesan bersama menu apapun di <?= $umkm['nama_stand'] ?>
-        </p>
-        <div class="ekstra-cols">
-          <div class="ekstra-col ekstra-col-full">
-            <div class="ekstra-card">
-              <div class="ekstra-card-header ekstra-header-umkm">
-                <span class="ekstra-icon">🏪</span>
-                <div>
-                  <h3>Ekstra Umum</h3>
-                  <p>Berlaku untuk semua menu</p>
-                </div>
-              </div>
-              <div class="ekstra-list">
-                <?php foreach ($ekstra_umkm as $e): ?>
-                <div class="ekstra-row">
-                  <div class="ekstra-row-info">
-                    <span class="ekstra-nama"><?= $e['nama_ekstra'] ?></span>
-                    <?php if ($e['keterangan']): ?>
-                      <span class="ekstra-ket"><?= $e['keterangan'] ?></span>
-                    <?php endif; ?>
+      <div class="ekstra-section-wrap">
+        <div class="ekstra-section-inner">
+          <h2 class="ekstra-section-title">
+            <span>+</span> Ekstra Berlaku untuk Semua Menu
+          </h2>
+          <p class="ekstra-section-sub">
+            Tambahan berikut bisa dipesan bersama menu apapun di <?= $umkm['nama_stand'] ?>
+          </p>
+          <div class="ekstra-cols">
+            <div class="ekstra-col ekstra-col-full">
+              <div class="ekstra-card">
+                <div class="ekstra-card-header ekstra-header-umkm">
+                  <span class="ekstra-icon">🏪</span>
+                  <div>
+                    <h3>Ekstra Umum</h3>
+                    <p>Berlaku untuk semua menu</p>
                   </div>
-                  <span class="ekstra-harga">
-                    <?php if ($e['harga_ekstra'] > 0): ?>
-                      +Rp<?= number_format($e['harga_ekstra'], 0, ',', '.') ?>
-                    <?php else: ?>
-                      <span class="free-tag">GRATIS</span>
-                    <?php endif; ?>
-                  </span>
                 </div>
-                <?php endforeach; ?>
+                <div class="ekstra-list">
+                  <?php foreach ($ekstra_umkm as $e): ?>
+                    <div class="ekstra-row">
+                      <div class="ekstra-row-info">
+                        <span class="ekstra-nama"><?= $e['nama_ekstra'] ?></span>
+                        <?php if ($e['keterangan']): ?>
+                          <span class="ekstra-ket"><?= $e['keterangan'] ?></span>
+                        <?php endif; ?>
+                      </div>
+                      <span class="ekstra-harga">
+                        <?php if ($e['harga_ekstra'] > 0): ?>
+                          +Rp<?= number_format($e['harga_ekstra'], 0, ',', '.') ?>
+                        <?php else: ?>
+                          <span class="free-tag">GRATIS</span>
+                        <?php endif; ?>
+                      </span>
+                    </div>
+                  <?php endforeach; ?>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
     <?php endif; ?>
 
     <div class="back-bar-umkm">
