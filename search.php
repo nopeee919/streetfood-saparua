@@ -44,7 +44,7 @@ while ($row = mysqli_fetch_assoc($result2)) {
 
 function getMatchingMenus($koneksi, $umkm_id, $keyword){
   $menu = [];
-  $sql = "SELECT id_menu, nama_menu, harga_menu, satuan, foto_menu
+  $sql = "SELECT id_menu, nama_menu, harga_menu, satuan
           FROM MENU
           WHERE id_umkm = $umkm_id
           AND nama_menu LIKE '$keyword'";

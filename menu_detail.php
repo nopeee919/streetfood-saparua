@@ -53,7 +53,7 @@ while ($row = mysqli_fetch_assoc($result_ekstra_umkm)) {
   $ekstra_umkm[] = $row;
 }
 
-$sql_other = "SELECT m.id_menu, m.nama_menu, m.harga_menu, m.satuan, m.foto_menu,
+$sql_other = "SELECT m.id_menu, m.nama_menu, m.harga_menu, m.satuan,
                 GROUP_CONCAT(kr.nama_rasa SEPARATOR ', ') AS rasa_list,
                 (SELECT COUNT(*) FROM EKSTRA_MENU em WHERE em.id_menu = m.id_menu) AS jml_ekstra
               FROM MENU m
