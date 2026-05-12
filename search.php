@@ -115,7 +115,7 @@ $total = count($umkm_combined);
             }
           ?>
           <div class="search-result-item">
-            <div class="search-umkm-card" onclick="window.location='umkm_detail.php?id=<?= $u['id_umkm'] ?>'">
+            <a href="umkm_detail.php?id=<?= $u['id_umkm'] ?>" class="search-umkm-card">
               <div class="search-card-img">
                 <?php if (!empty($u['foto']) && file_exists("images/" . $u['foto'])): ?>
                   <img src="images/<?= $u['foto'] ?>" alt="<?= $u['nama_stand'] ?>">
@@ -141,18 +141,14 @@ $total = count($umkm_combined);
                 <?php endif; ?>
                 <span class="card-detail-link">Lihat Detail →</span>
               </div>
-            </div>
+            </a>
             <?php if (!empty($matching_menus)): ?>
               <div class="search-menu-results">
                 <p class="menu-match-label">Menu yang cocok dengan "<?= $q ?>":</p>
                 <div class="search-menu-grid">
                   <?php foreach ($matching_menus as $mn): ?>
                     <a href="menu_detail.php?id=<?= $mn['id_menu'] ?>" class="search-menu-item">
-                      <?php if (!empty($mn['foto_menu']) && file_exists("images/" . $mn['foto_menu'])): ?>
-                        <img src="images/<?= $mn['foto_menu'] ?>" alt="<?= $mn['nama_menu'] ?>">
-                      <?php else: ?>
-                        <div class="menu-img-ph">🍴</div>
-                      <?php endif; ?>
+                      <div class="menu-img-ph">🍴</div>
                       <div>
                         <span class="search-menu-name"><?= $mn['nama_menu'] ?></span>
                         <span class="search-menu-price">Rp<?= number_format($mn['harga_menu'],0,',','.') ?><?= $mn['satuan']?'/'.$mn['satuan']:'' ?></span>

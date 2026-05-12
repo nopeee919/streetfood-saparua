@@ -531,6 +531,7 @@ button {
 .umkm-card:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-hover);
+  border-color: var(--c-accent);
 }
 .card-img-wrap {
   position: relative;
@@ -865,12 +866,6 @@ button {
 }
 .search-menu-item:hover {
   border-color: var(--c-accent);
-}
-.search-menu-item img {
-  width: 42px;
-  height: 42px;
-  object-fit: cover;
-  border-radius: 6px;
 }
 .menu-img-ph {
   width: 42px;
@@ -1380,17 +1375,13 @@ button {
 .menu-card:hover {
   transform: translateY(-3px);
   box-shadow: var(--shadow-hover);
+  border-color: var(--c-accent);
 }
 .menu-card-img {
   height: 130px;
   background: var(--c-surface2);
   overflow: hidden;
   position: relative;
-}
-.menu-card-img img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
 .menu-img-ph-big {
   width: 100%;
@@ -1587,11 +1578,6 @@ button {
   aspect-ratio: 4/3;
   background: var(--c-surface2);
   box-shadow: var(--shadow-card);
-}
-.menu-detail-img img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
 .menu-detail-img-ph {
   width: 100%;

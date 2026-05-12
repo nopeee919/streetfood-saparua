@@ -445,7 +445,7 @@ function getMitraUmkm($koneksi, $umkm_id) {
             $is_open = false;
           }
           ?>
-            <article class="umkm-card" onclick="window.location='umkm_detail.php?id=<?= $u['id_umkm'] ?>'">
+            <a href="umkm_detail.php?id=<?= $u['id_umkm'] ?>" class="umkm-card">
               <div class="card-img-wrap">
                 <?php if (!empty($u['foto']) && file_exists("images/" . $u['foto'])): ?>
                   <img src="images/<?= $u['foto'] ?>" alt="<?= $u['nama_stand'] ?>" loading="lazy">
@@ -528,7 +528,7 @@ function getMitraUmkm($koneksi, $umkm_id) {
               <div class="card-footer">
                 <span class="card-detail-link">Lihat Detail →</span>
               </div>
-            </article>
+            </a>
           <?php endforeach; ?>
           <?php if (empty($umkm_list)): ?>
             <div class="empty-state">

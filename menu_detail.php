@@ -54,15 +54,15 @@ while ($row = mysqli_fetch_assoc($result_ekstra_umkm)) {
 }
 
 $sql_other = "SELECT m.id_menu, m.nama_menu, m.harga_menu, m.satuan, m.foto_menu,
-                GROUP_CONCAT(kr.nama_rasa SEPARATOR ', ') AS rasa_list
+                GROUP_CONCAT(kr.nama_rasa SEPARATOR ', ') AS rasa_list,
+                (SELECT COUNT(*) FROM EKSTRA_MENU em WHERE em.id_menu = m.id_menu) AS jml_ekstra
               FROM MENU m
               LEFT JOIN MENU_RASA mr ON m.id_menu = mr.id_menu
               LEFT JOIN KATEGORI_RASA kr ON mr.id_rasa = kr.id_rasa
               WHERE m.id_umkm = $id_umkm
               AND m.id_menu != $id_menu
               GROUP BY m.id_menu
-              ORDER BY m.harga_menu
-              LIMIT 6";
+              ORDER BY m.harga_menu";
 $result_other = mysqli_query($koneksi, $sql_other);
 $other_menus = [];
 while ($row = mysqli_fetch_assoc($result_other)) {
@@ -126,11 +126,7 @@ function halalBadge($status) {
       <div class="menu-detail-inner">
 
         <div class="menu-detail-img">
-          <?php if (!empty($menu['foto_menu']) && file_exists("images/" . $menu['foto_menu'])): ?>
-            <img src="images/<?= $menu['foto_menu'] ?>" alt="<?= $menu['nama_menu'] ?>">
-          <?php else: ?>
-            <div class="menu-detail-img-ph">🍴</div>
-          <?php endif; ?>
+          <div class="menu-detail-img-ph">🍴</div>
         </div>
 
         <div class="menu-detail-info">
@@ -268,13 +264,9 @@ function halalBadge($status) {
           </h2>
           <div class="menu-grid">
             <?php foreach ($other_menus as $mn): ?>
-              <div class="menu-card" onclick="window.location='menu_detail.php?id=<?= $mn['id_menu'] ?>'">
+              <a href="menu_detail.php?id=<?= $mn['id_menu'] ?>" class="menu-card">
                 <div class="menu-card-img">
-                  <?php if (!empty($mn['foto_menu']) && file_exists("images/" . $mn['foto_menu'])): ?>
-                    <img src="images/<?= $mn['foto_menu'] ?>" alt="<?= $mn['nama_menu'] ?>">
-                  <?php else: ?>
-                    <div class="menu-img-ph-big">🍴</div>
-                  <?php endif; ?>
+                  <div class="menu-img-ph-big">🍴</div>
                 </div>
                 <div class="menu-card-body">
                   <h4 class="menu-card-name"><?= $mn['nama_menu'] ?></h4>
@@ -294,7 +286,7 @@ function halalBadge($status) {
                     <?php endif; ?>
                   </p>
                 </div>
-              </div>
+              </a>
             <?php endforeach; ?>
           </div>
         </div>

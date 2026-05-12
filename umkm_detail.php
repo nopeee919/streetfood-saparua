@@ -311,35 +311,39 @@ function halalBadge($status) {
           <?php foreach ($menu_list as $mn): ?>
           <a href="menu_detail.php?id=<?= $mn['id_menu'] ?>" class="menu-card menu-card-link">
             <div class="menu-card-img">
-              <?php if (!empty($mn['foto_menu']) && file_exists("images/" . $mn['foto_menu'])): ?>
-                <img src="images/<?= $mn['foto_menu'] ?>" alt="<?= $mn['nama_menu'] ?>">
-              <?php else: ?>
-                <div class="menu-img-ph-big">🍴</div>
-              <?php endif; ?>
+              <div class="menu-img-ph-big">🍴</div>
               <?php if ($mn['jml_ekstra'] > 0): ?>
                 <span class="menu-ekstra-badge">✚ Ekstra</span>
               <?php endif; ?>
             </div>
             <div class="menu-card-body">
               <h4 class="menu-card-name"><?= $mn['nama_menu'] ?></h4>
+
               <?php if ($mn['rasa_list']): ?>
-              <p class="menu-card-rasa">
+              <div class="menu-card-rasa">
                 <?php foreach (explode(', ', $mn['rasa_list']) as $r): ?>
                   <span class="rasa-chip"><?= $r ?></span>
                 <?php endforeach; ?>
-              </p>
+              </div>
               <?php endif; ?>
-              <p class="menu-card-price">
-                Rp<?= number_format($mn['harga_menu'], 0, ',', '.') ?>
-                <?php if (!empty($mn['satuan'])): ?>
-                  <span class="menu-satuan">/ <?= $mn['satuan'] ?></span>
-                <?php endif; ?>
-              </p>
-              <span class="menu-card-detail-link">Lihat detail →</span>
+
+              <div class="menu-card-footer">
+                <p class="menu-card-price">
+                  Rp<?= number_format($mn['harga_menu'], 0, ',', '.') ?>
+
+                  <?php if (!empty($mn['satuan'])): ?>
+                    <span class="menu-satuan">/ <?= $mn['satuan'] ?></span>
+                  <?php endif; ?>
+                </p>
+
+                <span class="menu-card-detail-link">Detail →</span>
+              </div>
             </div>
+
           </a>
           <?php endforeach; ?>
         </div>
+
         <?php endif; ?>
       </div>
     </div>
